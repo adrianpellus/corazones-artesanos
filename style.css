@@ -509,6 +509,44 @@ button {
 
 /* ─── 7. FILTROS ─────────────────────────────────────────────────────────────── */
 
+.tienda-search-wrap {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto 20px;
+}
+
+.tienda-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.tienda-search {
+  width: 100%;
+  padding: 11px 16px 11px 44px;
+  border: 1.5px solid var(--sand-light);
+  border-radius: 50px;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.tienda-search:focus {
+  border-color: var(--terracota);
+  box-shadow: 0 0 0 3px rgba(196, 96, 42, 0.1);
+}
+
+.tienda-search::placeholder {
+  color: var(--text-muted);
+}
+
 .filters {
   display: flex;
   flex-wrap: wrap;

@@ -118,13 +118,30 @@ function buildWaLink(p) {
   return `https://wa.me/${WA_NUMBER}?text=${msg}`;
 }
 
+let currentSearch = '';
+
+function getFilteredProducts() {
+  let products = allProducts.filter(p => p.visible !== false);
+  if (currentFilter !== 'todo') products = products.filter(p => p.categoria === currentFilter);
+  if (currentSearch) {
+    const q = currentSearch.toLowerCase();
+    products = products.filter(p =>
+      p.nombre.toLowerCase().includes(q) || (p.descripcion && p.descripcion.toLowerCase().includes(q))
+    );
+  }
+  return products;
+}
+
 function filterProducts(cat, btn) {
   currentFilter = cat;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const visible = allProducts.filter(p => p.visible !== false);
-  const filtered = cat === 'todo' ? visible : visible.filter(p => p.categoria === cat);
-  renderProducts(filtered);
+  renderProducts(getFilteredProducts());
+}
+
+function searchProducts(query) {
+  currentSearch = query.trim();
+  renderProducts(getFilteredProducts());
 }
 
 async function loadProducts() {
