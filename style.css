@@ -1348,6 +1348,40 @@ button {
   color: var(--terracota);
 }
 
+.admin-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.admin-filters input,
+.admin-filters select {
+  border: 1px solid var(--arena);
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.9rem;
+  background: white;
+  color: var(--text-dark);
+}
+
+.product-hidden {
+  opacity: 0.45;
+}
+
+.btn-toggle-vis {
+  background: none;
+  border: 1px solid var(--arena);
+  color: var(--text-muted);
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition);
+}
+.btn-toggle-vis:hover { background: var(--arena-light); }
+
 .btn-edit {
   background: none;
   border: 1px solid #bfdbfe;

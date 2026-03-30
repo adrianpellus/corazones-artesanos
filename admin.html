@@ -96,6 +96,17 @@
               <h3>Productos actuales</h3>
               <button onclick="exportJSON()" class="btn-secondary">⬇️ Exportar JSON</button>
             </div>
+            <div class="admin-filters">
+              <input type="text" id="admin-search" placeholder="🔍 Buscar por nombre..." oninput="renderAdminList()" style="flex:1">
+              <select id="admin-cat-filter" onchange="renderAdminList()">
+                <option value="">Todas las categorías</option>
+              </select>
+              <select id="admin-vis-filter" onchange="renderAdminList()">
+                <option value="">Todos</option>
+                <option value="visible">Visibles</option>
+                <option value="hidden">Ocultos</option>
+              </select>
+            </div>
             <div id="products-admin-list"></div>
           </div>
 

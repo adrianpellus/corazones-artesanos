@@ -61,23 +61,62 @@ function renderAdminList() {
     el.innerHTML = '<p style="color:#7A6055; font-style:italic; text-align:center; padding:20px 0">No hay productos aún.</p>';
     return;
   }
+
+  // Populate category filter
+  const catFilter = document.getElementById('admin-cat-filter');
+  if (catFilter) {
+    const cats = loadCategorias();
+    const current = catFilter.value;
+    catFilter.innerHTML = '<option value="">Todas las categorías</option>' +
+      cats.map(c => `<option value="${escapeAttr(c.id)}">${c.emoji} ${escapeHTML(c.nombre)}</option>`).join('');
+    catFilter.value = current;
+  }
+
+  const search = (document.getElementById('admin-search')?.value || '').toLowerCase();
+  const catVal = document.getElementById('admin-cat-filter')?.value || '';
+  const visVal = document.getElementById('admin-vis-filter')?.value || '';
+
+  const filtered = adminProducts.filter((p, i) => {
+    if (search && !p.nombre.toLowerCase().includes(search)) return false;
+    if (catVal && p.categoria !== catVal) return false;
+    if (visVal === 'visible' && p.visible === false) return false;
+    if (visVal === 'hidden' && p.visible !== false) return false;
+    return true;
+  });
+
+  if (!filtered.length) {
+    el.innerHTML = '<p style="color:#7A6055;font-style:italic;text-align:center;padding:20px 0">No hay productos con ese filtro.</p>';
+    return;
+  }
+
   el.innerHTML = '<div class="admin-product-list">' +
-    adminProducts.map((p, i) => {
+    filtered.map((p) => {
+      const i = adminProducts.indexOf(p);
       const imgs = p.imagenes && p.imagenes.length ? p.imagenes : [p.imagen];
-      const thumbs = imgs.slice(0, 4).map(src =>
+      const thumbs = imgs.slice(0, 3).map(src =>
         `<img src="${escapeAttr(src)}" style="width:36px;height:36px;object-fit:cover;border-radius:6px;border:1px solid var(--arena)">`
       ).join('');
+      const isHidden = p.visible === false;
       return `
-      <div class="admin-product-item">
+      <div class="admin-product-item${isHidden ? ' product-hidden' : ''}">
         <div style="display:flex;gap:4px;flex-shrink:0">${thumbs}</div>
         <div class="admin-product-info">
           <strong>${escapeHTML(p.nombre)}</strong>
           <span>${p.precio} € · ${escapeHTML(p.categoria)} · ${escapeHTML(p.stock)} · ${imgs.length} foto${imgs.length > 1 ? 's' : ''}</span>
         </div>
+        <button onclick="toggleVisible(${i})" class="btn-toggle-vis" title="${isHidden ? 'Mostrar en web' : 'Ocultar de web'}">
+          ${isHidden ? '👁️‍🗨️ Mostrar' : '🙈 Ocultar'}
+        </button>
         <button onclick="editProduct(${i})" class="btn-edit" title="Editar">✏️</button>
         <button onclick="deleteProduct(${i})" class="btn-delete" title="Eliminar">🗑️</button>
       </div>`;
     }).join('') + '</div>';
+}
+
+function toggleVisible(index) {
+  adminProducts[index].visible = adminProducts[index].visible === false ? true : false;
+  saveProducts();
+  showToast(adminProducts[index].visible === false ? 'Producto oculto 🙈' : 'Producto visible 👁️');
 }
 
 function escapeHTML(str) {

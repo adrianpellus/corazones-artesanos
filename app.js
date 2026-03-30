@@ -122,7 +122,8 @@ function filterProducts(cat, btn) {
   currentFilter = cat;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const filtered = cat === 'todo' ? allProducts : allProducts.filter(p => p.categoria === cat);
+  const visible = allProducts.filter(p => p.visible !== false);
+  const filtered = cat === 'todo' ? visible : visible.filter(p => p.categoria === cat);
   renderProducts(filtered);
 }
 
@@ -133,7 +134,7 @@ async function loadProducts() {
     try {
       allProducts = JSON.parse(local);
       loadFilters(allProducts);
-      renderProducts(allProducts);
+      renderProducts(allProducts.filter(p => p.visible !== false));
       return;
     } catch (e) {
       console.warn('Error parsing localStorage products, falling back to JSON file');
@@ -150,7 +151,7 @@ async function loadProducts() {
     allProducts = [];
   }
   loadFilters(allProducts);
-  renderProducts(allProducts);
+  renderProducts(allProducts.filter(p => p.visible !== false));
 }
 
 // ─── FILTROS DINÁMICOS ────────────────────────────────────────────────────────
