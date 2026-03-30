@@ -36,6 +36,7 @@
     <!-- TABS -->
     <div class="admin-tabs">
       <button class="tab-btn active" onclick="showTab('productos', this)">🛍️ Productos</button>
+      <button class="tab-btn" onclick="showTab('categorias', this)">🏷️ Categorías</button>
       <button class="tab-btn" onclick="showTab('banner', this)">📢 Banner</button>
     </div>
 
@@ -58,8 +59,6 @@
                 <label>Categoría *</label>
                 <select id="p-categoria" required>
                   <option value="">Selecciona...</option>
-                  <option value="velas">🕯️ Velas</option>
-                  <option value="crochet">🧶 Crochet</option>
                 </select>
               </div>
               <div class="form-group">
@@ -100,6 +99,29 @@
             <div id="products-admin-list"></div>
           </div>
 
+        </div>
+      </div>
+
+      <!-- TAB CATEGORÍAS -->
+      <div id="tab-categorias" class="tab-content">
+        <h2>Gestión de categorías</h2>
+        <div class="admin-grid">
+          <div class="admin-card">
+            <h3>Nueva categoría</h3>
+            <div class="form-group">
+              <label>Emoji</label>
+              <input type="text" id="cat-emoji" placeholder="🕯️" maxlength="4" style="width:80px">
+            </div>
+            <div class="form-group">
+              <label>Nombre *</label>
+              <input type="text" id="cat-nombre" placeholder="Ej: Jabones">
+            </div>
+            <button type="button" class="btn-primary" onclick="addCategoria()">Añadir categoría</button>
+          </div>
+          <div class="admin-card">
+            <h3>Categorías actuales</h3>
+            <div id="categorias-list"></div>
+          </div>
         </div>
       </div>
 

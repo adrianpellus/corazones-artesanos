@@ -229,6 +229,71 @@ function removeFoto(index) {
   renderFotosPreview();
 }
 
+// ─── CATEGORÍAS ──────────────────────────────────────────────────────────────
+const DEFAULT_CATEGORIAS = [
+  { id: 'velas', nombre: 'Velas', emoji: '🕯️' },
+  { id: 'crochet', nombre: 'Crochet', emoji: '🧶' }
+];
+
+function loadCategorias() {
+  return JSON.parse(localStorage.getItem('categorias') || JSON.stringify(DEFAULT_CATEGORIAS));
+}
+
+function saveCategorias(cats) {
+  localStorage.setItem('categorias', JSON.stringify(cats));
+}
+
+function renderCategoriasAdmin() {
+  const cats = loadCategorias();
+  const el = document.getElementById('categorias-list');
+  if (!cats.length) {
+    el.innerHTML = '<p style="color:#7A6055;font-style:italic">No hay categorías.</p>';
+  } else {
+    el.innerHTML = '<div class="admin-product-list">' +
+      cats.map((c, i) => `
+        <div class="admin-product-item">
+          <span style="font-size:1.5rem">${c.emoji}</span>
+          <div class="admin-product-info"><strong>${escapeHTML(c.nombre)}</strong></div>
+          <button onclick="deleteCategoria(${i})" class="btn-delete" title="Eliminar">🗑️</button>
+        </div>`
+      ).join('') + '</div>';
+  }
+  populateCategoriaSelect(cats);
+}
+
+function populateCategoriaSelect(cats) {
+  const sel = document.getElementById('p-categoria');
+  if (!sel) return;
+  const current = sel.value;
+  sel.innerHTML = '<option value="">Selecciona...</option>' +
+    cats.map(c => `<option value="${escapeAttr(c.id)}">${c.emoji} ${escapeHTML(c.nombre)}</option>`).join('');
+  if (current) sel.value = current;
+}
+
+function addCategoria() {
+  const nombre = document.getElementById('cat-nombre').value.trim();
+  const emoji = document.getElementById('cat-emoji').value.trim() || '📦';
+  if (!nombre) return;
+  const cats = loadCategorias();
+  const id = nombre.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  if (cats.find(c => c.id === id)) { showToast('Ya existe esa categoría'); return; }
+  cats.push({ id, nombre, emoji });
+  saveCategorias(cats);
+  document.getElementById('cat-nombre').value = '';
+  document.getElementById('cat-emoji').value = '';
+  renderCategoriasAdmin();
+  showToast('Categoría añadida ✅');
+}
+
+function deleteCategoria(index) {
+  const cats = loadCategorias();
+  if (!confirm(`¿Eliminar categoría "${cats[index].nombre}"?`)) return;
+  cats.splice(index, 1);
+  saveCategorias(cats);
+  renderCategoriasAdmin();
+  showToast('Categoría eliminada');
+}
+
 // ─── BANNER ──────────────────────────────────────────────────────────────────
 const BANNER_COLORS = {
   terracota: { bg: '#C4602A', text: '#fff' },
@@ -364,7 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initAdmin() {
+  renderCategoriasAdmin();
   loadAdminProducts();
   loadBannerAdmin();
-  loadSobreMiAdmin();
 }

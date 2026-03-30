@@ -122,6 +122,7 @@ async function loadProducts() {
   if (local) {
     try {
       allProducts = JSON.parse(local);
+      loadFilters(allProducts);
       renderProducts(allProducts);
       return;
     } catch (e) {
@@ -138,7 +139,27 @@ async function loadProducts() {
     console.warn('Could not load productos.json:', e);
     allProducts = [];
   }
+  loadFilters(allProducts);
   renderProducts(allProducts);
+}
+
+// ─── FILTROS DINÁMICOS ────────────────────────────────────────────────────────
+function loadFilters(products) {
+  const DEFAULT_CATEGORIAS = [
+    { id: 'velas', nombre: 'Velas', emoji: '🕯️' },
+    { id: 'crochet', nombre: 'Crochet', emoji: '🧶' }
+  ];
+  const stored = JSON.parse(localStorage.getItem('categorias') || JSON.stringify(DEFAULT_CATEGORIAS));
+
+  // Only show categories that have at least one product
+  const usedIds = [...new Set(products.map(p => p.categoria))];
+  const visible = stored.filter(c => usedIds.includes(c.id));
+
+  const container = document.getElementById('filters-container');
+  const extra = visible.map(c =>
+    `<button class="filter-btn" data-filter="${c.id}" onclick="filterProducts('${c.id}', this)">${c.emoji} ${c.nombre}</button>`
+  ).join('');
+  container.innerHTML = `<button class="filter-btn active" data-filter="todo" onclick="filterProducts('todo', this)">Todo</button>${extra}`;
 }
 
 // ─── GALLERY NAV ─────────────────────────────────────────────────────────────
