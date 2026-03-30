@@ -98,12 +98,12 @@ button {
 
 .logo {
   display: block;
-  width: 200px;
-  height: 56px;
+  width: 220px;
+  height: 60px;
   background-image: url('img/logo.png');
-  background-size: contain;
+  background-size: 420px auto;
   background-repeat: no-repeat;
-  background-position: left center;
+  background-position: center 50%;
   mix-blend-mode: multiply;
 }
 
@@ -1276,8 +1276,9 @@ button {
   }
 
   .logo {
-    width: 240px;
+    width: 260px;
     height: 64px;
+    background-size: 500px auto;
   }
 
   .main-nav {
