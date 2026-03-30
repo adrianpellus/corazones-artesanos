@@ -98,12 +98,12 @@ button {
 
 .logo {
   display: block;
-  width: 220px;
-  height: 60px;
+  width: 200px;
+  height: 56px;
   background-image: url('img/logo.png');
-  background-size: 420px auto;
+  background-size: 380px auto;
   background-repeat: no-repeat;
-  background-position: center 42%;
+  background-position: center 38%;
   mix-blend-mode: multiply;
 }
 
