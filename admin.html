@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin – Corazones Artesanos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Crimson+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+
+  <!-- LOGIN OVERLAY -->
+  <div id="login-overlay" class="login-overlay">
+    <div class="login-card">
+      <img src="img/logo.png" alt="Corazones Artesanos" class="login-logo" onerror="this.style.display='none'">
+      <h2>Panel de Administración</h2>
+      <p>Corazones Artesanos</p>
+      <div class="login-form">
+        <input type="password" id="login-pass" placeholder="Contraseña" autocomplete="current-password">
+        <button onclick="checkLogin()" class="btn-primary">Entrar</button>
+        <p id="login-error" class="login-error" style="display:none">Contraseña incorrecta</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div id="admin-panel" style="display:none">
+    <div class="admin-header">
+      <img src="img/logo.png" alt="" class="admin-logo" onerror="this.style.display='none'">
+      <span>Panel de Administración</span>
+      <a href="index.html" class="btn-ver-web">Ver web →</a>
+      <button onclick="logout()" class="btn-logout">Salir</button>
+    </div>
+
+    <!-- TABS -->
+    <div class="admin-tabs">
+      <button class="tab-btn active" onclick="showTab('productos', this)">🛍️ Productos</button>
+      <button class="tab-btn" onclick="showTab('banner', this)">📢 Banner</button>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- TAB PRODUCTOS -->
+      <div id="tab-productos" class="tab-content active">
+        <h2>Gestión de productos</h2>
+        <div class="admin-grid">
+
+          <!-- Formulario añadir -->
+          <div class="admin-card">
+            <h3>Añadir producto</h3>
+            <form id="product-form" onsubmit="addProduct(event)">
+              <div class="form-group">
+                <label>Nombre *</label>
+                <input type="text" id="p-nombre" required placeholder="Ej: Vela Lavanda">
+              </div>
+              <div class="form-group">
+                <label>Categoría *</label>
+                <select id="p-categoria" required>
+                  <option value="">Selecciona...</option>
+                  <option value="velas">🕯️ Velas</option>
+                  <option value="crochet">🧶 Crochet</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Precio (€) *</label>
+                <input type="number" id="p-precio" required min="0" step="0.5" placeholder="12">
+              </div>
+              <div class="form-group">
+                <label>Descripción *</label>
+                <textarea id="p-descripcion" required placeholder="Descripción breve del producto..."></textarea>
+              </div>
+              <div class="form-group">
+                <label>Stock (texto libre)</label>
+                <input type="text" id="p-stock" placeholder="Ej: Últimas 3 unidades / Disponible / Bajo pedido">
+              </div>
+              <div class="form-group">
+                <label>Fotos del producto</label>
+                <button type="button" class="btn-add-foto" onclick="openFotosPicker()">📷 Añadir fotos</button>
+                <div id="p-fotos-preview" class="fotos-preview-grid"></div>
+              </div>
+              <button type="submit" class="btn-primary">Añadir producto</button>
+            </form>
+          </div>
+
+          <!-- Lista productos -->
+          <div class="admin-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
+              <h3>Productos actuales</h3>
+              <button onclick="exportJSON()" class="btn-secondary">⬇️ Exportar JSON</button>
+            </div>
+            <div id="products-admin-list"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB BANNER -->
+      <div id="tab-banner" class="tab-content">
+        <h2>Configurar banner</h2>
+        <div class="admin-card" style="max-width:600px">
+          <div class="form-group">
+            <label>Mensaje del banner</label>
+            <input type="text" id="banner-msg" placeholder="🕯️ Nuevas velas de temporada disponibles — ¡Escríbeme!">
+          </div>
+          <div class="form-group">
+            <label>Color de fondo</label>
+            <div class="color-options">
+              <label class="color-option" style="background:#C4602A">
+                <input type="radio" name="banner-color" value="terracota" checked> Terracota
+              </label>
+              <label class="color-option" style="background:#5C6B3A">
+                <input type="radio" name="banner-color" value="verde-musgo"> Verde musgo
+              </label>
+              <label class="color-option" style="background:#2C3E6B">
+                <input type="radio" name="banner-color" value="azul-oscuro"> Azul oscuro
+              </label>
+              <label class="color-option" style="background:#7B2D3A">
+                <input type="radio" name="banner-color" value="granate"> Granate
+              </label>
+            </div>
+          </div>
+          <div class="form-group toggle-group">
+            <label>Banner activo</label>
+            <label class="toggle">
+              <input type="checkbox" id="banner-activo" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <button onclick="saveBanner()" class="btn-primary">💾 Guardar banner</button>
+          <div id="banner-saved" class="save-msg" style="display:none">✅ Banner guardado</div>
+          <!-- Preview -->
+          <div style="margin-top:24px">
+            <p style="font-size:0.8rem; text-transform:uppercase; letter-spacing:0.08em; color:#7A6055; margin-bottom:8px; font-weight:600">Previsualización</p>
+            <div id="banner-preview" class="banner-preview-admin" style="display:none"></div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

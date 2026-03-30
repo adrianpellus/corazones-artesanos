@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 76" fill="none">
+  <defs>
+    <linearGradient id="heartGrad" x1="14" y1="6" x2="68" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#D4702E"/>
+      <stop offset="100%" stop-color="#8B3040"/>
+    </linearGradient>
+    <linearGradient id="flameGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFD54F"/>
+      <stop offset="60%" stop-color="#FF8C00"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Heart shape -->
+  <path d="M41 66 C41 66 11 47 11 26 C11 14 20 5 31 5 C36 5 39 8 41 12 C43 8 46 5 51 5 C62 5 71 14 71 26 C71 47 41 66 41 66Z" fill="url(#heartGrad)"/>
+
+  <!-- Candle flame on top of heart -->
+  <ellipse cx="41" cy="3" rx="3.5" ry="5" fill="url(#flameGrad)" opacity="0.92"/>
+  <ellipse cx="41" cy="4.5" rx="1.8" ry="3" fill="#FFF9C4" opacity="0.55"/>
+
+  <!-- Yarn/crochet loop decoration inside heart -->
+  <path d="M30 42 Q35 34 41 40 Q47 46 52 38" stroke="white" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.45"/>
+  <circle cx="52" cy="37" r="2.5" stroke="white" stroke-width="1.4" fill="none" opacity="0.4"/>
+
+  <!-- Corazones text -->
+  <text x="86" y="38"
+    font-family="'Playfair Display', Georgia, 'Times New Roman', serif"
+    font-size="30"
+    font-weight="700"
+    fill="#2C1810"
+    letter-spacing="-0.3">Corazones</text>
+
+  <!-- Thin divider line -->
+  <line x1="86" y1="45" x2="308" y2="45" stroke="#C4602A" stroke-width="0.8" opacity="0.3"/>
+
+  <!-- Artesanos text -->
+  <text x="87" y="61"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="12.5"
+    font-weight="400"
+    fill="#7A6055"
+    letter-spacing="4.5">ARTESANOS</text>
+</svg>

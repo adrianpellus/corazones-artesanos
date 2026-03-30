@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "nombre": "Vela Artesanal en Tarro de Mármol",
+    "categoria": "velas",
+    "precio": 14,
+    "descripcion": "Vela de cera natural en elegante tarro efecto mármol. Aroma delicado para crear el ambiente perfecto en tu hogar.",
+    "imagen": "img/vela1.jpg",
+    "stock": "Disponible"
+  },
+  {
+    "id": 2,
+    "nombre": "Sachets Aromáticos Artesanales",
+    "categoria": "velas",
+    "precio": 8,
+    "descripcion": "Sachets perfumados en formas de estrella y círculo, elaborados a mano. Ideales para aromatizar cajones, armarios o regalos.",
+    "imagen": "img/sachets1.jpg",
+    "stock": "Últimas unidades"
+  },
+  {
+    "id": 3,
+    "nombre": "Jirafas Amigurumi Crochet",
+    "categoria": "crochet",
+    "precio": 22,
+    "descripcion": "Adorables jirafas tejidas a ganchillo, perfectas como regalo o decoración. Cada una es única y está hecha con hilo suave de calidad.",
+    "imagen": "img/crochet1.jpg",
+    "stock": "Bajo pedido"
+  },
+  {
+    "id": 4,
+    "nombre": "Wax Melts – Ceras Perfumadas",
+    "categoria": "velas",
+    "precio": 6,
+    "descripcion": "Ceras fundentes artesanales en múltiples aromas. Úsalas con tu quemador favorito para llenar cada rincón de tu casa de fragancia.",
+    "imagen": "img/ceras1.jpg",
+    "stock": "Disponible"
+  }
+]

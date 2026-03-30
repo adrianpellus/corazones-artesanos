@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corazones Artesanos – Velas y Crochet Hechos a Mano</title>
+  <meta name="description" content="Velas artesanales y productos de crochet hechos a mano con amor. Pide por WhatsApp.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Crimson+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header" id="inicio">
+    <div class="header-inner">
+      <div class="logo" role="img" aria-label="Corazones Artesanos"></div>
+    </div>
+    <nav class="main-nav">
+      <a href="#inicio">Inicio</a>
+      <a href="#tienda">Tienda</a>
+      <a href="#encargos">Encargos</a>
+      <a href="#proceso">Cómo lo hacemos</a>
+      <a href="#sobre-mi">Sobre nosotras</a>
+    </nav>
+  </header>
+
+  <!-- BANNER -->
+  <div id="banner" class="banner" style="display:none">
+    <span id="banner-text"></span>
+    <a id="banner-wa" href="https://wa.me/34655197603" target="_blank" class="banner-btn">Escríbeme ✉️</a>
+    <button class="banner-close" onclick="closeBanner()">✕</button>
+  </div>
+
+  <!-- TIENDA -->
+  <section id="tienda" class="section">
+    <div class="container">
+      <h2 class="section-title">Tienda</h2>
+      <p class="section-subtitle">Todo hecho a mano, con materiales naturales y mucho cariño</p>
+
+      <!-- Filtros -->
+      <div class="filters">
+        <button class="filter-btn active" data-filter="todo" onclick="filterProducts('todo', this)">Todo</button>
+        <button class="filter-btn" data-filter="velas" onclick="filterProducts('velas', this)">🕯️ Velas</button>
+        <button class="filter-btn" data-filter="crochet" onclick="filterProducts('crochet', this)">🧶 Crochet</button>
+      </div>
+
+      <!-- Grid de productos -->
+      <div class="products-grid" id="products-grid"></div>
+    </div>
+  </section>
+
+  <!-- ENCARGOS A MEDIDA -->
+  <section id="encargos" class="section encargos-section">
+    <div class="container">
+      <div class="encargos-inner">
+        <div class="encargos-icono">✦</div>
+        <h2 class="encargos-titulo">Encargos a medida</h2>
+        <p class="encargos-subtitulo">¿Tienes algo especial en mente? Lo hacemos realidad.</p>
+        <div class="encargos-lista">
+          <div class="encargo-item">
+            <span class="encargo-emoji">🕯️</span>
+            <div>
+              <strong>Velas personalizadas</strong>
+              <p>Elige el aroma, el color, el tarro y si quieres añadir un mensaje o nombre. Perfectas para bodas, cumpleaños o regalos únicos.</p>
+            </div>
+          </div>
+          <div class="encargo-item">
+            <span class="encargo-emoji">🧶</span>
+            <div>
+              <strong>Piezas de crochet únicas</strong>
+              <p>Amigurumis personalizados, colores a elegir, tamaños especiales. Si lo puedes imaginar, lo podemos tejer.</p>
+            </div>
+          </div>
+          <div class="encargo-item">
+            <span class="encargo-emoji">🎁</span>
+            <div>
+              <strong>Cestas y packs regalo</strong>
+              <p>Combinamos velas, sachets y piezas de crochet en un pack hecho a medida para la persona que quieras.</p>
+            </div>
+          </div>
+        </div>
+        <a href="https://wa.me/34655197603?text=Hola!%20Me%20gustar%C3%ADa%20hacer%20un%20encargo%20a%20medida%20%F0%9F%A4%8D"
+           target="_blank" class="encargos-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.535 5.858L0 24l6.335-1.508A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.367l-.36-.214-3.733.888.935-3.629-.234-.373A9.818 9.818 0 1112 21.818z"/></svg>
+          Pídenos tu encargo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO LO HACEMOS -->
+  <section id="proceso" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Cómo lo hacemos</h2>
+      <p class="section-subtitle">Cada pieza, hecha con amor</p>
+      <p class="proceso-text">Todo empieza con materiales naturales seleccionados con cuidado. Sin producción en serie, sin prisas. Cada vela y cada tejido nace de las manos de dos personas que lo ponen todo en lo que hacen.</p>
+      <div class="proceso-grid">
+        <div class="proceso-item">
+          <img src="img/vela1.jpg" alt="Vela artesanal en tarro de mármol">
+          <div class="proceso-caption">Velas en tarro, hechas a mano 🕯️</div>
+        </div>
+        <div class="proceso-item">
+          <img src="img/sachets1.jpg" alt="Sachets aromáticos artesanales">
+          <div class="proceso-caption">Sachets perfumados con esencias naturales 🌿</div>
+        </div>
+        <div class="proceso-item">
+          <img src="img/crochet1.jpg" alt="Amigurumis de crochet">
+          <div class="proceso-caption">Amigurumis tejidos puntada a puntada 🧶</div>
+        </div>
+        <div class="proceso-item">
+          <img src="img/ceras1.jpg" alt="Ceras fundentes artesanales">
+          <div class="proceso-caption">Ceras perfumadas para llenar tu hogar de fragancia ✨</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE NOSOTRAS -->
+  <section id="sobre-mi" class="section sobre-section">
+    <div class="container">
+      <div class="sobre-layout">
+
+        <!-- Foto -->
+        <div class="sobre-foto-wrap">
+          <div class="sobre-foto-frame">
+            <img src="img/nosotras.jpg" alt="Madre e hija, Corazones Artesanos" class="sobre-foto">
+          </div>
+          <p class="sobre-foto-caption">Dos manos. Un mismo corazón.</p>
+        </div>
+
+        <!-- Texto -->
+        <div class="sobre-texto">
+          <span class="sobre-eyebrow">Nuestra historia</span>
+          <h2 class="section-title left">Sobre nosotras</h2>
+
+          <p class="sobre-frase">"Lo que hacemos con las manos<br>lo ponemos con el alma."</p>
+
+          <div id="sobre-mi-content">
+            <div class="sobre-persona">
+              <span class="sobre-rol">🕯️ La madre</span>
+              <p>Desde siempre me ha fascinado cómo una vela puede transformar un espacio. Empecé a hacerlas en casa por puro placer — probando aromas, texturas, moldes — y sin darme cuenta, crear luz y fragancia se convirtió en mi forma de cuidar a los demás.</p>
+            </div>
+            <div class="sobre-persona">
+              <span class="sobre-rol">🧶 La hija</span>
+              <p>Aprendí a crear mirando a mamá hacer cosas con las manos. El ganchillo llegó después, y con él, un mundo de pequeñas decisiones que terminan convirtiéndose en algo único. Me encanta hacer piezas personalizadas — cuéntame qué tienes en mente.</p>
+            </div>
+          </div>
+
+          <a href="https://wa.me/34655197603" target="_blank" class="btn-wa-sobre">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.535 5.858L0 24l6.335-1.508A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.367l-.36-.214-3.733.888.935-3.629-.234-.373A9.818 9.818 0 1112 21.818z"/></svg>
+            Escríbenos por WhatsApp
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-logo" role="img" aria-label="Corazones Artesanos"></div>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/_corazones.artesanos_?igsh=b3ViaTBiaWx4bmZx" target="_blank" title="Instagram" class="social-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+      <a href="https://tiktok.com/@_corazones.artesanos_" target="_blank" title="TikTok" class="social-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.52V6.76a4.85 4.85 0 01-1.02-.07z"/></svg>
+      </a>
+      <a href="https://wa.me/34655197603" target="_blank" title="WhatsApp" class="social-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.535 5.858L0 24l6.335-1.508A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.367l-.36-.214-3.733.888.935-3.629-.234-.373A9.818 9.818 0 1112 21.818z"/></svg>
+      </a>
+    </div>
+    <p class="footer-legal">Venta entre particulares · No somos una empresa</p>
+    <p class="footer-copy">© 2025 Corazones Artesanos · Hecho con ❤️</p>
+  </footer>
+
+  <!-- BOTÓN FLOTANTE WHATSAPP -->
+  <a href="https://wa.me/34655197603" target="_blank" class="wa-float" title="Escríbeme por WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="30" height="30"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.535 5.858L0 24l6.335-1.508A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.367l-.36-.214-3.733.888.935-3.629-.234-.373A9.818 9.818 0 1112 21.818z"/></svg>
+  </a>
+
+  <script src="app.js"></script>
+</body>
+</html>
