@@ -1001,6 +1001,22 @@ button {
   color: var(--terracota);
 }
 
+.sobre-subtitulo {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--terracota);
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+
+.sobre-historia {
+  font-size: 0.97rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin-bottom: 24px;
+}
+
 .sobre-frase {
   font-family: 'Playfair Display', serif;
   font-style: italic;
