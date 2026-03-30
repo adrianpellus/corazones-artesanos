@@ -106,15 +106,20 @@
               <button onclick="exportJSON()" class="btn-secondary" style="width:auto">⬇️ Exportar JSON</button>
             </div>
             <div class="admin-filters">
-              <input type="text" id="admin-search" placeholder="🔍 Buscar..." oninput="renderAdminList()">
-              <select id="admin-cat-filter" onchange="renderAdminList()">
-                <option value="">Todas las categorías</option>
-              </select>
-              <select id="admin-vis-filter" onchange="renderAdminList()">
-                <option value="">Todos</option>
-                <option value="visible">Visibles</option>
-                <option value="hidden">Ocultos</option>
-              </select>
+              <div class="admin-search-wrap">
+                <svg class="admin-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="admin-search" placeholder="Buscar producto..." oninput="renderAdminList()">
+              </div>
+              <div class="admin-filter-selects">
+                <select id="admin-cat-filter" onchange="renderAdminList()">
+                  <option value="">Todas las categorías</option>
+                </select>
+                <select id="admin-vis-filter" onchange="renderAdminList()">
+                  <option value="">Todos</option>
+                  <option value="visible">Visibles</option>
+                  <option value="hidden">Ocultos</option>
+                </select>
+              </div>
             </div>
             <div id="products-admin-list"></div>
           </div>

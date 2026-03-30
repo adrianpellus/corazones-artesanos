@@ -398,13 +398,25 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
-.admin-filters input,
-.admin-filters select {
+.admin-search-wrap {
+  position: relative;
+}
+
+.admin-search-icon {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--tmut);
+  pointer-events: none;
+}
+
+.admin-search-wrap input {
   width: 100%;
-  padding: 10px 12px;
+  padding: 10px 12px 10px 36px;
   border: 1.5px solid var(--bord);
   border-radius: 8px;
   font-size: 0.875rem;
@@ -415,17 +427,32 @@ body {
   transition: border-color 0.2s;
 }
 
-.admin-filters select {
-  padding-right: 32px;
+.admin-search-wrap input:focus { border-color: var(--tc); }
+
+.admin-filter-selects {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-filter-selects select {
+  flex: 1;
+  padding: 10px 32px 10px 12px;
+  border: 1.5px solid var(--bord);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  outline: none;
+  background: var(--wh);
+  color: var(--tmain);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A6055' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 10px center;
   -webkit-appearance: none;
   appearance: none;
+  transition: border-color 0.2s;
 }
 
-.admin-filters input:focus,
-.admin-filters select:focus { border-color: var(--tc); }
+.admin-filter-selects select:focus { border-color: var(--tc); }
 
 /* ─── PRODUCT LIST ───────────────────────────────────────────────────────── */
 .admin-product-list {
