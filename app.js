@@ -141,7 +141,21 @@ function searchProducts(query) {
 }
 
 async function loadProducts() {
-  // Try localStorage first (admin changes)
+  // Try Supabase first
+  try {
+    const [prods, cats] = await Promise.all([sbGet('productos'), sbGet('categorias')]);
+    if (prods !== null) {
+      allProducts = prods;
+      if (cats) localStorage.setItem('categorias', JSON.stringify(cats));
+      await loadFilters(allProducts);
+      renderProducts(allProducts.filter(p => p.visible !== false));
+      return;
+    }
+  } catch (e) {
+    console.warn('Supabase no disponible, usando caché local');
+  }
+
+  // Fallback: localStorage
   const local = localStorage.getItem('productos');
   if (local) {
     try {
@@ -149,18 +163,15 @@ async function loadProducts() {
       await loadFilters(allProducts);
       renderProducts(allProducts.filter(p => p.visible !== false));
       return;
-    } catch (e) {
-      console.warn('Error parsing localStorage products, falling back to JSON file');
-    }
+    } catch (e) {}
   }
 
-  // Fallback to productos.json
+  // Fallback final: productos.json
   try {
     const res = await fetch('productos.json');
     if (!res.ok) throw new Error('HTTP ' + res.status);
     allProducts = await res.json();
   } catch (e) {
-    console.warn('Could not load productos.json:', e);
     allProducts = [];
   }
   await loadFilters(allProducts);
@@ -174,14 +185,9 @@ async function loadFilters(products) {
     { id: 'crochet', nombre: 'Crochet', emoji: '🧶' }
   ];
 
-  // Try localStorage, then categorias.json, then default
-  let stored = JSON.parse(localStorage.getItem('categorias') || 'null');
-  if (!stored) {
-    try {
-      const res = await fetch('categorias.json');
-      if (res.ok) stored = await res.json();
-    } catch (e) {}
-  }
+  let stored = null;
+  try { stored = await sbGet('categorias'); } catch (e) {}
+  if (!stored) stored = JSON.parse(localStorage.getItem('categorias') || 'null');
   if (!stored) stored = DEFAULT_CATEGORIAS;
   allCategorias = stored;
 

@@ -224,10 +224,12 @@ function deleteProduct(index) {
   showToast('Producto eliminado');
 }
 
-function saveProducts() {
+async function saveProducts() {
   localStorage.setItem('productos', JSON.stringify(adminProducts));
   renderAdminList();
-  publishFile('productos.json', adminProducts);
+  setPublishStatus('Guardando…', 'loading');
+  const ok = await sbSet('productos', adminProducts);
+  setPublishStatus(ok ? '✅ Publicado en la web' : '❌ Error al guardar', ok ? 'ok' : 'error');
 }
 
 function exportJSON() {
@@ -283,9 +285,11 @@ function loadCategorias() {
   return JSON.parse(localStorage.getItem('categorias') || JSON.stringify(DEFAULT_CATEGORIAS));
 }
 
-function saveCategorias(cats) {
+async function saveCategorias(cats) {
   localStorage.setItem('categorias', JSON.stringify(cats));
-  publishFile('categorias.json', cats);
+  setPublishStatus('Guardando…', 'loading');
+  const ok = await sbSet('categorias', cats);
+  setPublishStatus(ok ? '✅ Publicado en la web' : '❌ Error al guardar', ok ? 'ok' : 'error');
 }
 
 function renderCategoriasAdmin() {
@@ -479,87 +483,38 @@ function initAdmin() {
   loadBannerAdmin();
 }
 
-// ─── GITHUB AUTO-PUBLISH ────────────────────────────────────────────────────
-const GH_REPO = 'adrianpellus/corazones-artesanos';
-
-function getGhToken() {
-  return localStorage.getItem('gh_token') || '';
-}
-
-function saveGhToken() {
-  const token = document.getElementById('gh-token').value.trim();
-  if (!token) return;
-  localStorage.setItem('gh_token', token);
-  document.getElementById('gh-token').value = '';
-  showGhMsg('✅ Token guardado', 'ok');
-}
-
-async function testGhToken() {
-  const token = getGhToken();
-  if (!token) { showGhMsg('⚠️ Primero guarda un token', 'warn'); return; }
-  showGhMsg('Probando…', 'info');
-  try {
-    const res = await fetch(`https://api.github.com/repos/${GH_REPO}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    if (res.ok) showGhMsg('✅ Conexión correcta', 'ok');
-    else showGhMsg('❌ Token inválido o sin acceso', 'error');
-  } catch (e) {
-    showGhMsg('❌ Error de red', 'error');
-  }
-}
-
-function showGhMsg(text, type) {
-  const el = document.getElementById('gh-token-msg');
-  el.textContent = text;
-  el.style.display = 'block';
-  el.style.background = type === 'ok' ? '#e8f5e9' : type === 'error' ? '#fde8e8' : '#fff8e1';
-  el.style.color = type === 'ok' ? '#2e7d32' : type === 'error' ? '#c0392b' : '#7a6020';
-}
-
+// ─── PUBLISH STATUS ──────────────────────────────────────────────────────────
 function setPublishStatus(text, type) {
   const el = document.getElementById('publish-status');
   if (!el) return;
   el.textContent = text;
   el.style.display = 'block';
   el.className = 'publish-status publish-status--' + type;
-  if (type === 'ok') setTimeout(() => { el.style.display = 'none'; }, 4000);
+  if (type === 'ok') setTimeout(() => { el.style.display = 'none'; }, 3000);
 }
 
-async function publishFile(filename, data) {
-  const token = getGhToken();
-  if (!token) return; // sin token, solo localStorage
-
-  setPublishStatus('Publicando en la web…', 'loading');
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
-  const url = `https://api.github.com/repos/${GH_REPO}/contents/${filename}`;
-
+// ─── CONFIG TAB ───────────────────────────────────────────────────────────────
+async function initConfigTab() {
+  const el = document.getElementById('gh-token-msg');
+  if (!el) return;
+  el.textContent = 'Probando conexión con Supabase…';
+  el.style.display = 'block';
+  el.style.background = '#fff8e1';
+  el.style.color = '#7a6020';
   try {
-    // Get current SHA
-    const getRes = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-    const sha = getRes.ok ? (await getRes.json()).sha : undefined;
-
-    // Push new content
-    const putRes = await fetch(url, {
-      method: 'PUT',
-      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: `Admin: actualizar ${filename}`, content, sha })
-    });
-
-    if (putRes.ok) {
-      setPublishStatus('✅ Publicado — la web se actualiza en ~30 seg', 'ok');
+    const data = await sbGet('productos');
+    if (data !== null) {
+      el.textContent = '✅ Supabase conectado correctamente';
+      el.style.background = '#e8f5e9';
+      el.style.color = '#2e7d32';
     } else {
-      const err = await putRes.json();
-      setPublishStatus('❌ Error al publicar: ' + (err.message || putRes.status), 'error');
+      el.textContent = '❌ No se pudo conectar con Supabase';
+      el.style.background = '#fde8e8';
+      el.style.color = '#c0392b';
     }
   } catch (e) {
-    setPublishStatus('❌ Sin conexión con GitHub', 'error');
+    el.textContent = '❌ Error de conexión';
+    el.style.background = '#fde8e8';
+    el.style.color = '#c0392b';
   }
-}
-
-// Load saved token into input on config tab open
-function initConfigTab() {
-  const token = getGhToken();
-  const input = document.getElementById('gh-token');
-  if (input) input.placeholder = token ? '••••••••••••••• (guardado)' : 'ghp_xxxxxxxxxxxx';
 }

@@ -191,19 +191,10 @@
       <div id="tab-config" class="tab-content">
         <h2>Configuración</h2>
         <div class="admin-card" style="max-width:520px">
-          <h3>Publicación automática</h3>
+          <h3>Estado de Supabase</h3>
           <p style="font-size:0.875rem;color:var(--tmut);margin-bottom:16px;line-height:1.6">
-            Al guardar un producto se publicará automáticamente en la web.<br>
-            Necesitas un <strong>Token de GitHub</strong> con permiso <em>repo</em> (solo se guarda en este dispositivo).
+            Los cambios se guardan automáticamente en Supabase y se ven en todos los dispositivos al instante.
           </p>
-          <div class="form-group">
-            <label>Token de GitHub</label>
-            <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off">
-          </div>
-          <div class="form-actions">
-            <button class="btn-primary" onclick="saveGhToken()" style="width:auto">Guardar token</button>
-            <button class="btn-secondary" onclick="testGhToken()" style="width:auto">Probar conexión</button>
-          </div>
           <div id="gh-token-msg" class="save-msg" style="display:none"></div>
         </div>
       </div>
@@ -211,6 +202,7 @@
     </div>
   </div>
 
+  <script src="supabase.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>
