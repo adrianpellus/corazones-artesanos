@@ -69,12 +69,12 @@
               </div>
               <div class="form-group">
                 <label>Precio (€) *</label>
-                <div style="display:flex;gap:8px;align-items:center">
-                  <input type="number" id="p-precio" required min="0" step="0.5" placeholder="12" style="flex:1">
-                  <span style="color:var(--text-muted);font-size:0.9rem">hasta</span>
-                  <input type="number" id="p-precio-max" min="0" step="0.5" placeholder="opcional" style="flex:1">
+                <div class="price-row">
+                  <input type="number" id="p-precio" required min="0" step="0.5" placeholder="12">
+                  <span class="price-sep">hasta</span>
+                  <input type="number" id="p-precio-max" min="0" step="0.5" placeholder="opcional">
                 </div>
-                <small style="color:var(--text-muted)">Rellena "hasta" solo si quieres mostrar un rango (ej: 10 € – 20 €)</small>
+                <small>Rellena "hasta" solo si quieres un rango (ej: 10 € – 20 €)</small>
               </div>
               <div class="form-group">
                 <label>Descripción *</label>
@@ -94,8 +94,8 @@
                 <button type="button" class="btn-add-foto" onclick="openFotosPicker()">📷 Añadir fotos</button>
                 <div id="p-fotos-preview" class="fotos-preview-grid"></div>
               </div>
-              <div style="display:flex;gap:10px;flex-wrap:wrap">
-                <button type="submit" class="btn-primary">Añadir producto</button>
+              <div class="form-actions">
+                <button type="submit" class="btn-primary" id="btn-submit">Añadir producto</button>
                 <button type="button" class="btn-secondary" onclick="resetForm()" id="btn-cancelar" style="display:none">Cancelar</button>
               </div>
             </form>
@@ -103,12 +103,12 @@
 
           <!-- Lista productos -->
           <div class="admin-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
-              <h3>Productos actuales</h3>
-              <button onclick="exportJSON()" class="btn-secondary">⬇️ Exportar JSON</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; gap:8px; flex-wrap:wrap">
+              <h3 style="margin:0">Productos actuales</h3>
+              <button onclick="exportJSON()" class="btn-secondary" style="width:auto">⬇️ Exportar JSON</button>
             </div>
             <div class="admin-filters">
-              <input type="text" id="admin-search" placeholder="🔍 Buscar por nombre..." oninput="renderAdminList()" style="flex:1">
+              <input type="text" id="admin-search" placeholder="🔍 Buscar..." oninput="renderAdminList()">
               <select id="admin-cat-filter" onchange="renderAdminList()">
                 <option value="">Todas las categorías</option>
               </select>

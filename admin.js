@@ -93,22 +93,22 @@ function renderAdminList() {
     filtered.map((p) => {
       const i = adminProducts.indexOf(p);
       const imgs = p.imagenes && p.imagenes.length ? p.imagenes : [p.imagen];
-      const thumbs = imgs.slice(0, 3).map(src =>
-        `<img src="${escapeAttr(src)}" style="width:36px;height:36px;object-fit:cover;border-radius:6px;border:1px solid var(--arena)">`
+      const thumbs = imgs.slice(0, 2).map(src =>
+        `<img src="${escapeAttr(src)}" alt="">`
       ).join('');
       const isHidden = p.visible === false;
       return `
       <div class="admin-product-item${isHidden ? ' product-hidden' : ''}">
-        <div style="display:flex;gap:4px;flex-shrink:0">${thumbs}</div>
+        <div class="admin-product-thumbs">${thumbs}</div>
         <div class="admin-product-info">
           <strong>${escapeHTML(p.nombre)}</strong>
-          <span>${p.precio} € · ${escapeHTML(p.categoria)} · ${escapeHTML(p.stock)} · ${imgs.length} foto${imgs.length > 1 ? 's' : ''}</span>
+          <span>${p.precio} € · ${escapeHTML(p.categoria)} · ${escapeHTML(p.stock)}</span>
         </div>
-        <button onclick="toggleVisible(${i})" class="btn-toggle-vis" title="${isHidden ? 'Mostrar en web' : 'Ocultar de web'}">
-          ${isHidden ? '👁️‍🗨️ Mostrar' : '🙈 Ocultar'}
-        </button>
-        <button onclick="editProduct(${i})" class="btn-edit" title="Editar">✏️</button>
-        <button onclick="deleteProduct(${i})" class="btn-delete" title="Eliminar">🗑️</button>
+        <div class="admin-product-actions">
+          <button onclick="toggleVisible(${i})" class="btn-toggle-vis">${isHidden ? '👁 Mostrar' : '🙈 Ocultar'}</button>
+          <button onclick="editProduct(${i})" class="btn-edit">✏️ Editar</button>
+          <button onclick="deleteProduct(${i})" class="btn-delete">🗑 Borrar</button>
+        </div>
       </div>`;
     }).join('') + '</div>';
 }
