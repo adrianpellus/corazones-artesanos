@@ -200,6 +200,27 @@ function loadSobreMi() {
   }
 }
 
+// ─── HAMBURGER MENU ───────────────────────────────────────────────────────────
+function toggleMenu() {
+  const menu = document.getElementById('mobile-menu');
+  const btn = document.getElementById('hamburger');
+  if (!menu || !btn) return;
+  const isOpen = menu.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+  btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  menu.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Close mobile menu on link click
+  document.querySelectorAll('.mobile-menu-link').forEach(l => l.addEventListener('click', () => {
+    const menu = document.getElementById('mobile-menu');
+    const btn = document.getElementById('hamburger');
+    if (menu) { menu.classList.remove('open'); menu.setAttribute('aria-hidden', 'true'); }
+    if (btn) { btn.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+  }));
+});
+
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   initBanner();
