@@ -100,10 +100,14 @@ button {
   display: block;
   width: 200px;
   height: 56px;
-  background-image: url('img/logo.png');
-  background-size: 380px auto;
-  background-repeat: no-repeat;
-  background-position: center 30%;
+  overflow: hidden;
+}
+
+.logo-img {
+  width: 200px;
+  height: auto;
+  display: block;
+  margin-top: -72px;
   mix-blend-mode: multiply;
 }
 
@@ -1141,14 +1145,19 @@ button {
 }
 
 .footer-logo {
-  width: 180px;
-  height: 50px;
-  background-image: url('img/logo.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: left center;
-  filter: invert(1) brightness(2);
+  width: 160px;
+  height: 44px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #FDF7EF;
   margin-bottom: 12px;
+}
+
+.footer-logo-img {
+  width: 160px;
+  height: auto;
+  display: block;
+  margin-top: -58px;
 }
 
 .footer-desc {
@@ -1278,7 +1287,11 @@ button {
   .logo {
     width: 260px;
     height: 64px;
-    background-size: 500px auto;
+  }
+
+  .logo-img {
+    width: 260px;
+    margin-top: -98px;
   }
 
   .main-nav {
