@@ -553,53 +553,62 @@ body {
 /* ─── BANNER ─────────────────────────────────────────────────────────────── */
 .color-options {
   display: flex;
-  gap: 8px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
-.color-option {
-  position: relative;
-  display: inline-flex;
+.color-swatch {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 6px;
-  padding: 10px 16px;
-  border-radius: 10px;
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 700;
   cursor: pointer;
-  border: 3px solid transparent;
-  transition: border-color 0.15s, opacity 0.15s;
   user-select: none;
 }
 
-.color-option:hover { opacity: 0.9; }
-
-.color-option input[type="radio"] {
+.color-swatch input[type="radio"] {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.color-option:has(input:checked) {
-  border-color: rgba(255,255,255,0.8);
-  box-shadow: 0 0 0 3px rgba(0,0,0,0.15);
-}
-
-.color-option::before {
-  content: '';
-  width: 16px;
-  height: 16px;
+.swatch-circle {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.7);
-  background: transparent;
-  flex-shrink: 0;
+  background: var(--c);
+  border: 3px solid transparent;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.color-option:has(input:checked)::before {
-  background: #fff;
-  border-color: #fff;
+.color-swatch:hover .swatch-circle {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.color-swatch:has(input:checked) .swatch-circle {
+  border-color: var(--tmain);
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.12);
+}
+
+.color-swatch:has(input:checked) .swatch-circle::after {
+  content: '✓';
+  color: #fff;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.swatch-name {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--tmut);
+  text-align: center;
 }
 
 .banner-preview-admin {
