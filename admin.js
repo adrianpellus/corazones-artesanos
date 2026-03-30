@@ -475,3 +475,31 @@ function initAdmin() {
   loadAdminProducts();
   loadBannerAdmin();
 }
+
+// ─── EXPORTAR DATOS ────────────────────────────────────────────────────────
+function exportarDatos() {
+  const productos = JSON.parse(localStorage.getItem('productos') || '[]');
+  const categorias = JSON.parse(localStorage.getItem('categorias') || '[]');
+
+  // Descargar productos.json
+  const pBlob = new Blob([JSON.stringify(productos, null, 2)], { type: 'application/json' });
+  const pUrl = URL.createObjectURL(pBlob);
+  const pA = document.createElement('a');
+  pA.href = pUrl;
+  pA.download = 'productos.json';
+  pA.click();
+  URL.revokeObjectURL(pUrl);
+
+  // Descargar categorias.json (pequeño retraso para no bloquear)
+  setTimeout(() => {
+    const cBlob = new Blob([JSON.stringify(categorias, null, 2)], { type: 'application/json' });
+    const cUrl = URL.createObjectURL(cBlob);
+    const cA = document.createElement('a');
+    cA.href = cUrl;
+    cA.download = 'categorias.json';
+    cA.click();
+    URL.revokeObjectURL(cUrl);
+  }, 300);
+
+  alert('✅ Descargados productos.json y categorias.json\n\nPasos para publicar:\n1. Reemplaza los archivos en la carpeta del proyecto\n2. Haz git add + commit + push\n3. Vercel desplegará automáticamente');
+}

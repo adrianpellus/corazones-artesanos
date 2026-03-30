@@ -1427,3 +1427,36 @@ button {
     justify-content: space-between;
   }
 }
+
+/* ─── ADMIN PUBLISH BAR ─────────────────────────────────────────────────────── */
+.admin-publish-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 20px;
+  background: #fff8e1;
+  border-bottom: 1px solid #ffe082;
+  flex-wrap: wrap;
+}
+
+.publish-info {
+  font-size: 0.85rem;
+  color: #7a6020;
+}
+
+.btn-publish {
+  padding: 8px 16px;
+  background: #C4602A;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-publish:hover {
+  background: #a8501f;
+}

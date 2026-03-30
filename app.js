@@ -42,6 +42,7 @@ function closeBanner() {
 
 // ─── PRODUCTS ────────────────────────────────────────────────────────────────
 let allProducts = [];
+let allCategorias = [];
 let currentFilter = 'todo';
 
 function getStockClass(stock) {
@@ -52,12 +53,7 @@ function getStockClass(stock) {
 }
 
 function getCategoriaLabel(catId) {
-  const DEFAULT = [
-    { id: 'velas', nombre: 'Velas', emoji: '🕯️' },
-    { id: 'crochet', nombre: 'Crochet', emoji: '🧶' }
-  ];
-  const cats = JSON.parse(localStorage.getItem('categorias') || JSON.stringify(DEFAULT));
-  const cat = cats.find(c => c.id === catId);
+  const cat = allCategorias.find(c => c.id === catId);
   return cat ? `${cat.emoji} ${cat.nombre}` : catId;
 }
 
@@ -150,7 +146,7 @@ async function loadProducts() {
   if (local) {
     try {
       allProducts = JSON.parse(local);
-      loadFilters(allProducts);
+      await loadFilters(allProducts);
       renderProducts(allProducts.filter(p => p.visible !== false));
       return;
     } catch (e) {
@@ -167,17 +163,27 @@ async function loadProducts() {
     console.warn('Could not load productos.json:', e);
     allProducts = [];
   }
-  loadFilters(allProducts);
+  await loadFilters(allProducts);
   renderProducts(allProducts.filter(p => p.visible !== false));
 }
 
 // ─── FILTROS DINÁMICOS ────────────────────────────────────────────────────────
-function loadFilters(products) {
+async function loadFilters(products) {
   const DEFAULT_CATEGORIAS = [
     { id: 'velas', nombre: 'Velas', emoji: '🕯️' },
     { id: 'crochet', nombre: 'Crochet', emoji: '🧶' }
   ];
-  const stored = JSON.parse(localStorage.getItem('categorias') || JSON.stringify(DEFAULT_CATEGORIAS));
+
+  // Try localStorage, then categorias.json, then default
+  let stored = JSON.parse(localStorage.getItem('categorias') || 'null');
+  if (!stored) {
+    try {
+      const res = await fetch('categorias.json');
+      if (res.ok) stored = await res.json();
+    } catch (e) {}
+  }
+  if (!stored) stored = DEFAULT_CATEGORIAS;
+  allCategorias = stored;
 
   // Only show categories that have at least one product
   const usedIds = [...new Set(products.map(p => p.categoria))];
