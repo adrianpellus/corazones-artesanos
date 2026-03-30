@@ -145,34 +145,17 @@ body {
   flex-shrink: 0;
 }
 
-/* ─── PUBLISH BAR ────────────────────────────────────────────────────────── */
-.admin-publish-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+/* ─── PUBLISH STATUS ─────────────────────────────────────────────────────── */
+.publish-status {
   padding: 10px 16px;
-  background: #fff8e1;
-  border-bottom: 1px solid #ffe082;
-  flex-wrap: wrap;
-}
-
-.publish-info { font-size: 0.8rem; color: #7a6020; flex: 1; min-width: 0; }
-
-.btn-publish {
-  padding: 9px 16px;
-  background: var(--tc);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
   font-size: 0.875rem;
-  font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap;
-  flex-shrink: 0;
+  font-weight: 600;
+  text-align: center;
 }
 
-.btn-publish:active { background: var(--tcd); }
+.publish-status--loading { background: #fff8e1; color: #7a6020; }
+.publish-status--ok      { background: #e8f5e9; color: #2e7d32; }
+.publish-status--error   { background: #fde8e8; color: #c0392b; }
 
 /* ─── TABS ───────────────────────────────────────────────────────────────── */
 .admin-tabs {

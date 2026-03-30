@@ -26,6 +26,7 @@ function showTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   btn.classList.add('active');
+  if (name === 'config') initConfigTab();
 }
 
 // ─── PRODUCTS ──────────────────────────────────────────────────────────────
@@ -226,6 +227,7 @@ function deleteProduct(index) {
 function saveProducts() {
   localStorage.setItem('productos', JSON.stringify(adminProducts));
   renderAdminList();
+  publishFile('productos.json', adminProducts);
 }
 
 function exportJSON() {
@@ -283,6 +285,7 @@ function loadCategorias() {
 
 function saveCategorias(cats) {
   localStorage.setItem('categorias', JSON.stringify(cats));
+  publishFile('categorias.json', cats);
 }
 
 function renderCategoriasAdmin() {
@@ -476,30 +479,87 @@ function initAdmin() {
   loadBannerAdmin();
 }
 
-// ─── EXPORTAR DATOS ────────────────────────────────────────────────────────
-function exportarDatos() {
-  const productos = JSON.parse(localStorage.getItem('productos') || '[]');
-  const categorias = JSON.parse(localStorage.getItem('categorias') || '[]');
+// ─── GITHUB AUTO-PUBLISH ────────────────────────────────────────────────────
+const GH_REPO = 'adrianpellus/corazones-artesanos';
 
-  // Descargar productos.json
-  const pBlob = new Blob([JSON.stringify(productos, null, 2)], { type: 'application/json' });
-  const pUrl = URL.createObjectURL(pBlob);
-  const pA = document.createElement('a');
-  pA.href = pUrl;
-  pA.download = 'productos.json';
-  pA.click();
-  URL.revokeObjectURL(pUrl);
+function getGhToken() {
+  return localStorage.getItem('gh_token') || '';
+}
 
-  // Descargar categorias.json (pequeño retraso para no bloquear)
-  setTimeout(() => {
-    const cBlob = new Blob([JSON.stringify(categorias, null, 2)], { type: 'application/json' });
-    const cUrl = URL.createObjectURL(cBlob);
-    const cA = document.createElement('a');
-    cA.href = cUrl;
-    cA.download = 'categorias.json';
-    cA.click();
-    URL.revokeObjectURL(cUrl);
-  }, 300);
+function saveGhToken() {
+  const token = document.getElementById('gh-token').value.trim();
+  if (!token) return;
+  localStorage.setItem('gh_token', token);
+  document.getElementById('gh-token').value = '';
+  showGhMsg('✅ Token guardado', 'ok');
+}
 
-  alert('✅ Descargados productos.json y categorias.json\n\nPasos para publicar:\n1. Reemplaza los archivos en la carpeta del proyecto\n2. Haz git add + commit + push\n3. Vercel desplegará automáticamente');
+async function testGhToken() {
+  const token = getGhToken();
+  if (!token) { showGhMsg('⚠️ Primero guarda un token', 'warn'); return; }
+  showGhMsg('Probando…', 'info');
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GH_REPO}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (res.ok) showGhMsg('✅ Conexión correcta', 'ok');
+    else showGhMsg('❌ Token inválido o sin acceso', 'error');
+  } catch (e) {
+    showGhMsg('❌ Error de red', 'error');
+  }
+}
+
+function showGhMsg(text, type) {
+  const el = document.getElementById('gh-token-msg');
+  el.textContent = text;
+  el.style.display = 'block';
+  el.style.background = type === 'ok' ? '#e8f5e9' : type === 'error' ? '#fde8e8' : '#fff8e1';
+  el.style.color = type === 'ok' ? '#2e7d32' : type === 'error' ? '#c0392b' : '#7a6020';
+}
+
+function setPublishStatus(text, type) {
+  const el = document.getElementById('publish-status');
+  if (!el) return;
+  el.textContent = text;
+  el.style.display = 'block';
+  el.className = 'publish-status publish-status--' + type;
+  if (type === 'ok') setTimeout(() => { el.style.display = 'none'; }, 4000);
+}
+
+async function publishFile(filename, data) {
+  const token = getGhToken();
+  if (!token) return; // sin token, solo localStorage
+
+  setPublishStatus('Publicando en la web…', 'loading');
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+  const url = `https://api.github.com/repos/${GH_REPO}/contents/${filename}`;
+
+  try {
+    // Get current SHA
+    const getRes = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+    const sha = getRes.ok ? (await getRes.json()).sha : undefined;
+
+    // Push new content
+    const putRes = await fetch(url, {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: `Admin: actualizar ${filename}`, content, sha })
+    });
+
+    if (putRes.ok) {
+      setPublishStatus('✅ Publicado — la web se actualiza en ~30 seg', 'ok');
+    } else {
+      const err = await putRes.json();
+      setPublishStatus('❌ Error al publicar: ' + (err.message || putRes.status), 'error');
+    }
+  } catch (e) {
+    setPublishStatus('❌ Sin conexión con GitHub', 'error');
+  }
+}
+
+// Load saved token into input on config tab open
+function initConfigTab() {
+  const token = getGhToken();
+  const input = document.getElementById('gh-token');
+  if (input) input.placeholder = token ? '••••••••••••••• (guardado)' : 'ghp_xxxxxxxxxxxx';
 }

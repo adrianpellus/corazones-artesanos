@@ -33,17 +33,15 @@
       <button onclick="logout()" class="btn-logout">Salir</button>
     </div>
 
-    <!-- PUBLICAR -->
-    <div class="admin-publish-bar">
-      <span class="publish-info">Los cambios solo se ven en este dispositivo hasta que los publiques.</span>
-      <button onclick="exportarDatos()" class="btn-publish">⬇️ Exportar datos</button>
-    </div>
+    <!-- ESTADO PUBLICACIÓN -->
+    <div id="publish-status" class="publish-status" style="display:none"></div>
 
     <!-- TABS -->
     <div class="admin-tabs">
       <button class="tab-btn active" onclick="showTab('productos', this)">🛍️ Productos</button>
       <button class="tab-btn" onclick="showTab('categorias', this)">🏷️ Categorías</button>
       <button class="tab-btn" onclick="showTab('banner', this)">📢 Banner</button>
+      <button class="tab-btn" onclick="showTab('config', this)">⚙️ Config</button>
     </div>
 
     <div class="admin-content">
@@ -189,6 +187,26 @@
         </div>
       </div>
 
+      <!-- TAB CONFIG -->
+      <div id="tab-config" class="tab-content">
+        <h2>Configuración</h2>
+        <div class="admin-card" style="max-width:520px">
+          <h3>Publicación automática</h3>
+          <p style="font-size:0.875rem;color:var(--tmut);margin-bottom:16px;line-height:1.6">
+            Al guardar un producto se publicará automáticamente en la web.<br>
+            Necesitas un <strong>Token de GitHub</strong> con permiso <em>repo</em> (solo se guarda en este dispositivo).
+          </p>
+          <div class="form-group">
+            <label>Token de GitHub</label>
+            <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off">
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" onclick="saveGhToken()" style="width:auto">Guardar token</button>
+            <button class="btn-secondary" onclick="testGhToken()" style="width:auto">Probar conexión</button>
+          </div>
+          <div id="gh-token-msg" class="save-msg" style="display:none"></div>
+        </div>
+      </div>
 
     </div>
   </div>
