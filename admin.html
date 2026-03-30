@@ -79,7 +79,10 @@
                 <button type="button" class="btn-add-foto" onclick="openFotosPicker()">📷 Añadir fotos</button>
                 <div id="p-fotos-preview" class="fotos-preview-grid"></div>
               </div>
-              <button type="submit" class="btn-primary">Añadir producto</button>
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <button type="submit" class="btn-primary">Añadir producto</button>
+                <button type="button" class="btn-secondary" onclick="resetForm()" id="btn-cancelar" style="display:none">Cancelar</button>
+              </div>
             </form>
           </div>
 

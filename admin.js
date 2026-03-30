@@ -31,6 +31,7 @@ function showTab(name, btn) {
 // ─── PRODUCTS ──────────────────────────────────────────────────────────────
 let adminProducts = [];
 let pendingImages = []; // base64 images for current form
+let editingIndex = -1;  // -1 = adding new, >= 0 = editing existing
 
 async function loadAdminProducts() {
   const local = localStorage.getItem('productos');
@@ -73,6 +74,7 @@ function renderAdminList() {
           <strong>${escapeHTML(p.nombre)}</strong>
           <span>${p.precio} € · ${escapeHTML(p.categoria)} · ${escapeHTML(p.stock)} · ${imgs.length} foto${imgs.length > 1 ? 's' : ''}</span>
         </div>
+        <button onclick="editProduct(${i})" class="btn-edit" title="Editar">✏️</button>
         <button onclick="deleteProduct(${i})" class="btn-delete" title="Eliminar">🗑️</button>
       </div>`;
     }).join('') + '</div>';
@@ -93,9 +95,15 @@ function escapeAttr(str) {
 function addProduct(e) {
   e.preventDefault();
   const categoria = document.getElementById('p-categoria').value;
-  const imagenes = pendingImages.length ? [...pendingImages] : [`img/${categoria}1.jpg`];
-  const newProduct = {
-    id: Date.now(),
+  const existingImgs = editingIndex >= 0
+    ? (adminProducts[editingIndex].imagenes || [adminProducts[editingIndex].imagen])
+    : [];
+  const imagenes = pendingImages.length
+    ? [...existingImgs, ...pendingImages]
+    : existingImgs.length ? existingImgs : [`img/${categoria}1.jpg`];
+
+  const product = {
+    id: editingIndex >= 0 ? adminProducts[editingIndex].id : Date.now(),
     nombre: document.getElementById('p-nombre').value.trim(),
     categoria,
     precio: parseFloat(document.getElementById('p-precio').value),
@@ -104,17 +112,71 @@ function addProduct(e) {
     imagen: imagenes[0],
     imagenes
   };
-  adminProducts.unshift(newProduct);
+
+  if (editingIndex >= 0) {
+    adminProducts[editingIndex] = product;
+    showToast('Producto actualizado ✅');
+  } else {
+    adminProducts.unshift(product);
+    showToast('Producto añadido ✅');
+  }
+
   saveProducts();
-  document.getElementById('product-form').reset();
+  resetForm();
+}
+
+function editProduct(index) {
+  const p = adminProducts[index];
+  editingIndex = index;
+  document.getElementById('p-nombre').value = p.nombre;
+  document.getElementById('p-categoria').value = p.categoria;
+  document.getElementById('p-precio').value = p.precio;
+  document.getElementById('p-descripcion').value = p.descripcion;
+  document.getElementById('p-stock').value = p.stock;
+
+  // Show existing images
   pendingImages = [];
+  const imgs = p.imagenes && p.imagenes.length ? p.imagenes : [p.imagen];
+  const container = document.getElementById('p-fotos-preview');
+  container.innerHTML = imgs.map((src, i) => `
+    <div class="foto-thumb">
+      <img src="${src}">
+      <button type="button" class="foto-thumb-remove" onclick="removeExistingFoto(${i})">✕</button>
+    </div>
+  `).join('');
+
+  // Update form title and button
+  document.querySelector('#product-form h3, .admin-card h3').textContent = 'Editando producto';
+  document.querySelector('#product-form button[type="submit"]').textContent = '💾 Guardar cambios';
+  document.getElementById('btn-cancelar').style.display = 'inline-flex';
+
+  // Scroll to form
+  document.getElementById('product-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function removeExistingFoto(index) {
+  const p = adminProducts[editingIndex];
+  const imgs = p.imagenes && p.imagenes.length ? [...p.imagenes] : [p.imagen];
+  imgs.splice(index, 1);
+  adminProducts[editingIndex] = { ...p, imagenes: imgs, imagen: imgs[0] || '' };
+  editProduct(editingIndex); // re-render
+}
+
+function resetForm() {
+  editingIndex = -1;
+  pendingImages = [];
+  document.getElementById('product-form').reset();
   document.getElementById('p-fotos-preview').innerHTML = '';
-  showToast('Producto añadido ✅');
+  document.querySelector('#product-form button[type="submit"]').textContent = 'Añadir producto';
+  document.getElementById('btn-cancelar').style.display = 'none';
+  const cards = document.querySelectorAll('.admin-card h3');
+  if (cards[0]) cards[0].textContent = 'Añadir producto';
 }
 
 function deleteProduct(index) {
   if (!confirm(`¿Eliminar "${adminProducts[index].nombre}"?`)) return;
   adminProducts.splice(index, 1);
+  if (editingIndex === index) resetForm();
   saveProducts();
   showToast('Producto eliminado');
 }
