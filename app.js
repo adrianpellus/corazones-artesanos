@@ -14,8 +14,11 @@ const BANNER_COLORS = {
   granate: { bg: '#7B2D3A', text: '#fff' }
 };
 
-function initBanner() {
-  const config = JSON.parse(localStorage.getItem('banner_config') || JSON.stringify(DEFAULT_BANNER));
+async function initBanner() {
+  let config = null;
+  try { config = await sbGet('banner'); } catch (e) {}
+  if (!config) config = JSON.parse(localStorage.getItem('banner_config') || JSON.stringify(DEFAULT_BANNER));
+
   const banner = document.getElementById('banner');
   const bannerText = document.getElementById('banner-text');
 

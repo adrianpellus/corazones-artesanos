@@ -351,8 +351,11 @@ const BANNER_COLORS = {
   granate: { bg: '#7B2D3A', text: '#fff' }
 };
 
-function loadBannerAdmin() {
-  const config = JSON.parse(localStorage.getItem('banner_config') || '{}');
+async function loadBannerAdmin() {
+  let config = null;
+  try { config = await sbGet('banner'); } catch (e) {}
+  if (!config) config = JSON.parse(localStorage.getItem('banner_config') || '{}');
+  if (!config) return;
   if (config.texto) document.getElementById('banner-msg').value = config.texto;
   if (config.color) {
     const radio = document.querySelector(`input[name="banner-color"][value="${config.color}"]`);
@@ -363,7 +366,7 @@ function loadBannerAdmin() {
   }
 }
 
-function saveBanner() {
+async function saveBanner() {
   const colorRadio = document.querySelector('input[name="banner-color"]:checked');
   const color = colorRadio ? colorRadio.value : 'terracota';
   const msgInput = document.getElementById('banner-msg').value.trim();
@@ -373,6 +376,7 @@ function saveBanner() {
     color
   };
   localStorage.setItem('banner_config', JSON.stringify(config));
+  await sbSet('banner', config);
 
   // Update preview
   const colors = BANNER_COLORS[color] || BANNER_COLORS.terracota;
