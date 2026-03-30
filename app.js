@@ -51,6 +51,16 @@ function getStockClass(stock) {
   return 'stock-order';
 }
 
+function getCategoriaLabel(catId) {
+  const DEFAULT = [
+    { id: 'velas', nombre: 'Velas', emoji: '🕯️' },
+    { id: 'crochet', nombre: 'Crochet', emoji: '🧶' }
+  ];
+  const cats = JSON.parse(localStorage.getItem('categorias') || JSON.stringify(DEFAULT));
+  const cat = cats.find(c => c.id === catId);
+  return cat ? `${cat.emoji} ${cat.nombre}` : catId;
+}
+
 function renderProducts(products) {
   const grid = document.getElementById('products-grid');
 
@@ -74,7 +84,7 @@ function renderProducts(products) {
         ${dots}
       </div>
       <div class="product-body">
-        <span class="product-category">${p.categoria === 'velas' ? '🕯️ Vela' : '🧶 Crochet'}</span>
+        <span class="product-category">${getCategoriaLabel(p.categoria)}</span>
         <h3 class="product-name">${escapeHTML(p.nombre)}</h3>
         <p class="product-desc">${escapeHTML(p.descripcion)}</p>
         <div class="product-footer">
