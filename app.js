@@ -88,7 +88,7 @@ function renderProducts(products) {
         <h3 class="product-name">${escapeHTML(p.nombre)}</h3>
         <p class="product-desc">${escapeHTML(p.descripcion)}</p>
         <div class="product-footer">
-          <span class="product-price">${p.precio} €</span>
+          <span class="product-price">${p.precioMax ? `${p.precio} € – ${p.precioMax} €` : `${p.precio} €`}</span>
           <span class="stock-badge ${getStockClass(p.stock)}">${escapeHTML(p.stock)}</span>
         </div>
         <a href="${buildWaLink(p)}" target="_blank" class="btn-wa-product">

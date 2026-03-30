@@ -146,6 +146,7 @@ function addProduct(e) {
     nombre: document.getElementById('p-nombre').value.trim(),
     categoria,
     precio: parseFloat(document.getElementById('p-precio').value),
+    precioMax: document.getElementById('p-precio-max').value ? parseFloat(document.getElementById('p-precio-max').value) : null,
     descripcion: document.getElementById('p-descripcion').value.trim(),
     stock: document.getElementById('p-stock').value.trim() || 'Disponible',
     imagen: imagenes[0],
@@ -170,6 +171,7 @@ function editProduct(index) {
   document.getElementById('p-nombre').value = p.nombre;
   document.getElementById('p-categoria').value = p.categoria;
   document.getElementById('p-precio').value = p.precio;
+  document.getElementById('p-precio-max').value = p.precioMax || '';
   document.getElementById('p-descripcion').value = p.descripcion;
   document.getElementById('p-stock').value = p.stock;
 
@@ -205,6 +207,7 @@ function resetForm() {
   editingIndex = -1;
   pendingImages = [];
   document.getElementById('product-form').reset();
+  document.getElementById('p-precio-max').value = '';
   document.getElementById('p-fotos-preview').innerHTML = '';
   document.querySelector('#product-form button[type="submit"]').textContent = 'Añadir producto';
   document.getElementById('btn-cancelar').style.display = 'none';
