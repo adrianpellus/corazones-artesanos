@@ -34,14 +34,52 @@ let adminProducts = [];
 let pendingImages = []; // base64 images for current form
 let editingIndex = -1;  // -1 = adding new, >= 0 = editing existing
 
+async function recompressProductImages(products) {
+  return Promise.all(products.map(async p => {
+    const imgs = p.imagenes && p.imagenes.length ? p.imagenes : [p.imagen];
+    const compressed = await Promise.all(imgs.map(async src => {
+      if (!src || !src.startsWith('data:')) return src;
+      // Recompress existing base64 images that are too large (> 100KB)
+      const sizeKB = Math.round(src.length * 0.75 / 1024);
+      if (sizeKB <= 100) return src;
+      return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => {
+          let w = img.width, h = img.height;
+          const maxPx = 900;
+          if (w > maxPx || h > maxPx) {
+            if (w > h) { h = Math.round(h * maxPx / w); w = maxPx; }
+            else       { w = Math.round(w * maxPx / h); h = maxPx; }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL('image/jpeg', 0.75));
+        };
+        img.onerror = () => resolve(src);
+        img.src = src;
+      });
+    }));
+    return { ...p, imagenes: compressed, imagen: compressed[0] || p.imagen };
+  }));
+}
+
 async function loadAdminProducts() {
   // Always try Supabase first so all devices stay in sync
   try {
     const remote = await sbGet('productos');
     if (Array.isArray(remote) && remote.length > 0) {
       adminProducts = remote;
-      localStorage.setItem('productos', JSON.stringify(adminProducts));
       renderAdminList();
+      // Recompress heavy images in background and re-save to Supabase
+      const recompressed = await recompressProductImages(adminProducts);
+      const changed = JSON.stringify(recompressed).length < JSON.stringify(adminProducts).length;
+      if (changed) {
+        adminProducts = recompressed;
+        renderAdminList();
+        await sbSet('productos', adminProducts);
+      }
+      localStorage.setItem('productos', JSON.stringify(adminProducts));
       return;
     }
   } catch (e) {
@@ -267,19 +305,38 @@ function exportJSON() {
   showToast('JSON exportado ⬇️');
 }
 
+function compressImage(file, maxPx, quality) {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        let w = img.width, h = img.height;
+        if (w > maxPx || h > maxPx) {
+          if (w > h) { h = Math.round(h * maxPx / w); w = maxPx; }
+          else       { w = Math.round(w * maxPx / h); h = maxPx; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 function openFotosPicker() {
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = 'image/*';
   input.multiple = true;
   input.onchange = () => {
-    Array.from(input.files).forEach(file => {
-      const reader = new FileReader();
-      reader.onload = e => {
-        pendingImages.push(e.target.result);
-        renderFotosPreview();
-      };
-      reader.readAsDataURL(file);
+    Array.from(input.files).forEach(async file => {
+      const compressed = await compressImage(file, 900, 0.75);
+      pendingImages.push(compressed);
+      renderFotosPreview();
     });
   };
   input.click();
