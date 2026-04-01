@@ -178,6 +178,12 @@ function addProduct(e) {
 
   saveProducts();
   resetForm();
+
+  // En móvil el formulario está encima de la lista — hacer scroll para que se vea
+  setTimeout(() => {
+    const lista = document.getElementById('products-admin-list');
+    if (lista) lista.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
 }
 
 function editProduct(index) {
