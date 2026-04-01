@@ -249,7 +249,12 @@ async function saveProducts() {
   renderAdminList();
   setPublishStatus('Guardando…', 'loading');
   const ok = await sbSet('productos', adminProducts);
-  setPublishStatus(ok ? '✅ Publicado en la web' : '❌ Error al guardar', ok ? 'ok' : 'error');
+  if (ok) {
+    setPublishStatus('✅ Publicado en la web', 'ok');
+  } else {
+    setPublishStatus('❌ Error al guardar en Supabase — los cambios solo están en este dispositivo', 'error');
+    showToast('⚠️ Error al guardar en la nube');
+  }
 }
 
 function exportJSON() {

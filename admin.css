@@ -111,7 +111,7 @@ body {
   flex-shrink: 0;
 }
 
-.admin-header > span {
+.admin-header > span:first-of-type {
   flex: 1;
   font-weight: 700;
   font-size: 0.85rem;
@@ -119,6 +119,13 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.admin-build-date {
+  font-size: 0.7rem;
+  color: var(--tmut);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-ver-web {

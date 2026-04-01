@@ -29,6 +29,7 @@
     <div class="admin-header">
       <img src="img/logo.png" alt="" class="admin-logo" onerror="this.style.display='none'">
       <span>Panel de Administración</span>
+      <span id="build-date-label" class="admin-build-date"></span>
       <a href="index.html" class="btn-ver-web">Ver web →</a>
       <button onclick="logout()" class="btn-logout">Salir</button>
     </div>
@@ -215,7 +216,11 @@
     </div>
   </div>
 
+  <script src="version.js"></script>
   <script src="supabase.js"></script>
   <script src="admin.js"></script>
+  <script>
+    document.getElementById('build-date-label').textContent = 'v ' + BUILD_DATE;
+  </script>
 </body>
 </html>
