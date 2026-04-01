@@ -38,7 +38,7 @@ async function loadAdminProducts() {
   // Always try Supabase first so all devices stay in sync
   try {
     const remote = await sbGet('productos');
-    if (remote) {
+    if (Array.isArray(remote) && remote.length > 0) {
       adminProducts = remote;
       localStorage.setItem('productos', JSON.stringify(adminProducts));
       renderAdminList();
