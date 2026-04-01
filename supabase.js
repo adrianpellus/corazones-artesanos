@@ -19,11 +19,11 @@ async function sbGet(key) {
 
 async function sbSet(key, value) {
   const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/store_data?key=eq.${key}`,
+    `${SUPABASE_URL}/rest/v1/store_data`,
     {
-      method: 'PATCH',
-      headers: { ...SB_HEADERS, 'Prefer': 'return=minimal' },
-      body: JSON.stringify({ value })
+      method: 'POST',
+      headers: { ...SB_HEADERS, 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+      body: JSON.stringify({ key, value })
     }
   );
   return res.ok;

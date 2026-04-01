@@ -1460,3 +1460,73 @@ button {
 .btn-publish:hover {
   background: #a8501f;
 }
+
+/* ─── DARK MODE ──────────────────────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cream:       #1A1210;
+    --cream-dark:  #231815;
+    --terracota:   #D4714A;
+    --terracota-dark: #BA5C38;
+    --brown:       #F0DDD0;
+    --brown-mid:   #C8A898;
+    --sage:        #8FAF7A;
+    --sand:        #3D2D1A;
+    --sand-light:  #2A1E12;
+    --text:        #EDD8C8;
+    --text-muted:  #B09080;
+    --shadow:      rgba(0,0,0,0.3);
+    --shadow-deep: rgba(0,0,0,0.55);
+  }
+
+  body { color-scheme: dark; }
+
+  /* Header */
+  .site-header { background: #1A1210; border-color: #3D2820; }
+  .nav-link { color: var(--text); }
+
+  /* Buscador y filtros */
+  .tienda-search {
+    background: #231815;
+    color: var(--text);
+    border-color: var(--sand);
+  }
+  .filter-btn {
+    background: var(--sand);
+    color: var(--brown-mid);
+    border-color: #4D3828;
+  }
+
+  /* Tarjetas de producto */
+  .product-card { background: #231815; }
+  .gallery-prev,
+  .gallery-next { background: rgba(30,18,12,0.85); color: var(--text); }
+  .gallery-prev:hover,
+  .gallery-next:hover { background: #2A1A10; }
+
+  /* Sección sobre mí */
+  .sobre-persona { background: #231815; }
+
+  /* Testimonios */
+  .testimonio-card {
+    background: #231815;
+    border-color: var(--sand);
+  }
+
+  /* Sección contacto */
+  .contacto-btn-wa {
+    background: #231815;
+    color: var(--brown);
+    border-color: var(--sand);
+  }
+
+  /* Footer */
+  .site-footer { background: #0E0907; }
+
+  /* Banner admin */
+  .admin-publish-bar {
+    background: #2a2010;
+    border-color: #5a4010;
+  }
+  .publish-info { color: #d4b060; }
+}

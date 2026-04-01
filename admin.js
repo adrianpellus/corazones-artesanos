@@ -35,6 +35,19 @@ let pendingImages = []; // base64 images for current form
 let editingIndex = -1;  // -1 = adding new, >= 0 = editing existing
 
 async function loadAdminProducts() {
+  // Always try Supabase first so all devices stay in sync
+  try {
+    const remote = await sbGet('productos');
+    if (remote) {
+      adminProducts = remote;
+      localStorage.setItem('productos', JSON.stringify(adminProducts));
+      renderAdminList();
+      return;
+    }
+  } catch (e) {
+    console.warn('Could not load from Supabase:', e);
+  }
+  // Fallback: localStorage
   const local = localStorage.getItem('productos');
   if (local) {
     try {
@@ -45,6 +58,7 @@ async function loadAdminProducts() {
       console.warn('Error parsing localStorage products');
     }
   }
+  // Last resort: static file
   try {
     const res = await fetch('productos.json');
     if (!res.ok) throw new Error('HTTP ' + res.status);

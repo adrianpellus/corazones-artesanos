@@ -725,3 +725,69 @@ body {
   .admin-grid { flex-direction: row; align-items: flex-start; }
   .admin-grid > .admin-card { flex: 1; }
 }
+
+/* ─── DARK MODE ──────────────────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --tc:   #D4734A;
+    --tcd:  #BA5E38;
+    --cream:#1C1410;
+    --sand: #2A1E15;
+    --tmain:#F0DDD0;
+    --tmut: #A08878;
+    --bord: #3D2820;
+    --bg:   #130D08;
+    --wh:   #211510;
+  }
+
+  body { color-scheme: dark; }
+
+  .login-overlay { background: var(--bg); }
+
+  .login-form input[type="password"] {
+    background: var(--wh);
+    color: var(--tmain);
+  }
+
+  .admin-header,
+  .admin-tabs { background: var(--wh); }
+
+  .admin-card { background: var(--wh); }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--bg);
+    color: var(--tmain);
+    border-color: var(--bord);
+  }
+
+  .admin-search-wrap input,
+  .admin-filter-selects select {
+    background: var(--bg);
+    color: var(--tmain);
+    border-color: var(--bord);
+  }
+
+  .admin-product-item { background: var(--sand); }
+
+  .btn-edit       { background: #1a2a4a; color: #7aaaf5; }
+  .btn-delete     { background: #3a1515; color: #f07070; }
+  .btn-toggle-vis { background: var(--sand); color: var(--tmain); }
+
+  .publish-status--loading { background: #2a2010; color: #d4b060; }
+  .publish-status--ok      { background: #0e2010; color: #6abf6a; }
+  .publish-status--error   { background: #2a0e0e; color: #f07070; }
+
+  .save-msg { background: #0e2010; color: #6abf6a; }
+
+  #gh-token-msg { background: #2a2010; color: #d4b060; }
+
+  .btn-ver-web { background: var(--sand); color: var(--tmain); }
+
+  .color-swatch:has(input:checked) .swatch-circle { border-color: var(--tmain); }
+
+  .swatch-name { color: var(--tmut); }
+
+  .toggle-group { border-color: var(--bord); }
+}
