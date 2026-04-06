@@ -480,11 +480,14 @@ async function saveBanner() {
 }
 
 // ─── SOBRE MÍ ────────────────────────────────────────────────────────────────
-function loadSobreMiAdmin() {
-  const texto = localStorage.getItem('sobre_mi_texto');
-  const foto = localStorage.getItem('sobre_mi_foto');
+async function loadSobreMiAdmin() {
+  let data = null;
+  try { data = await sbGet('sobre_mi'); } catch (e) {}
+
+  const texto = (data && data.texto) || localStorage.getItem('sobre_mi_texto');
+  const foto = (data && data.foto) || localStorage.getItem('sobre_mi_foto');
+
   if (texto) {
-    // Strip HTML tags for the textarea
     const plain = texto.replace(/<p>/g, '').replace(/<\/p>/g, '\n').replace(/<[^>]+>/g, '').trim();
     document.getElementById('sobre-mi-admin').value = plain;
   }
@@ -495,9 +498,8 @@ function loadSobreMiAdmin() {
   }
 }
 
-function saveSobreMi() {
+async function saveSobreMi() {
   const texto = document.getElementById('sobre-mi-admin').value.trim();
-  // Wrap each non-empty line in a <p> tag
   const html = texto.split('\n')
     .filter(l => l.trim())
     .map(l => `<p>${l.trim()}</p>`)
@@ -505,13 +507,21 @@ function saveSobreMi() {
   localStorage.setItem('sobre_mi_texto', html);
 
   const foto = document.getElementById('sobre-mi-foto-preview');
+  let fotoData = null;
   if (foto.style.display !== 'none' && foto.src && foto.src.startsWith('data:')) {
-    localStorage.setItem('sobre_mi_foto', foto.src);
+    fotoData = foto.src;
+    localStorage.setItem('sobre_mi_foto', fotoData);
   }
 
+  setPublishStatus('Guardando…', 'loading');
+  const ok = await sbSet('sobre_mi', { texto: html, foto: fotoData });
+  setPublishStatus(ok ? '✅ Publicado en la web' : '❌ Error al guardar', ok ? 'ok' : 'error');
+
   const msg = document.getElementById('sobre-mi-saved');
-  msg.style.display = 'inline-block';
-  setTimeout(() => { msg.style.display = 'none'; }, 2500);
+  if (msg) {
+    msg.style.display = 'inline-block';
+    setTimeout(() => { msg.style.display = 'none'; }, 2500);
+  }
 }
 
 function previewSobreMiFoto(input) {
@@ -563,7 +573,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-function initAdmin() {
+async function initAdmin() {
+  // Load categories from Supabase first so the form's category select is populated
+  // even on first visit from a device with empty localStorage
+  try {
+    const cats = await sbGet('categorias');
+    if (Array.isArray(cats) && cats.length) {
+      localStorage.setItem('categorias', JSON.stringify(cats));
+    }
+  } catch (e) {}
   renderCategoriasAdmin();
   loadAdminProducts();
   loadBannerAdmin();

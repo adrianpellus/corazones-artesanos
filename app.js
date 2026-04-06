@@ -220,9 +220,13 @@ function galleryPrev(btn) { galleryNav(btn, -1); }
 function galleryNext(btn) { galleryNav(btn, 1); }
 
 // ─── SOBRE MÍ ────────────────────────────────────────────────────────────────
-function loadSobreMi() {
-  const texto = localStorage.getItem('sobre_mi_texto');
-  const foto = localStorage.getItem('sobre_mi_foto');
+async function loadSobreMi() {
+  let data = null;
+  try { data = await sbGet('sobre_mi'); } catch (e) {}
+
+  const texto = (data && data.texto) || localStorage.getItem('sobre_mi_texto');
+  const foto = (data && data.foto) || localStorage.getItem('sobre_mi_foto');
+
   if (texto) {
     document.getElementById('sobre-mi-content').innerHTML = texto;
   }
