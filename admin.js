@@ -259,7 +259,7 @@ function removeExistingFoto(index) {
   const imgs = p.imagenes && p.imagenes.length ? [...p.imagenes] : [p.imagen];
   imgs.splice(index, 1);
   adminProducts[editingIndex] = { ...p, imagenes: imgs, imagen: imgs[0] || '' };
-  editProduct(editingIndex); // re-render
+  renderFotosPreview(); // re-render without resetting pendingImages
 }
 
 function resetForm() {
@@ -344,12 +344,23 @@ function openFotosPicker() {
 
 function renderFotosPreview() {
   const container = document.getElementById('p-fotos-preview');
-  container.innerHTML = pendingImages.map((src, i) => `
+  // When editing, show existing images + new pending images together
+  const existingImgs = editingIndex >= 0
+    ? (adminProducts[editingIndex].imagenes || (adminProducts[editingIndex].imagen ? [adminProducts[editingIndex].imagen] : []))
+    : [];
+  const existingHTML = existingImgs.map((src, i) => `
     <div class="foto-thumb">
-      <img src="${src}">
+      <img src="${src}" alt="">
+      <button type="button" class="foto-thumb-remove" onclick="removeExistingFoto(${i})">✕</button>
+    </div>
+  `).join('');
+  const pendingHTML = pendingImages.map((src, i) => `
+    <div class="foto-thumb foto-thumb-new">
+      <img src="${src}" alt="">
       <button type="button" class="foto-thumb-remove" onclick="removeFoto(${i})">✕</button>
     </div>
   `).join('');
+  container.innerHTML = existingHTML + pendingHTML;
 }
 
 function removeFoto(index) {
