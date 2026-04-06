@@ -33,6 +33,7 @@ function showTab(name, btn) {
 let adminProducts = [];
 let pendingImages = []; // base64 images for current form
 let editingIndex = -1;  // -1 = adding new, >= 0 = editing existing
+let compressingCount = 0; // tracks in-flight image compressions
 
 async function recompressProductImages(products) {
   return Promise.all(products.map(async p => {
@@ -194,8 +195,9 @@ function addProduct(e) {
     ? [...existingImgs, ...pendingImages]
     : existingImgs.length ? existingImgs : [`img/${categoria}1.jpg`];
 
+  const existing = editingIndex >= 0 ? adminProducts[editingIndex] : {};
   const product = {
-    id: editingIndex >= 0 ? adminProducts[editingIndex].id : Date.now(),
+    id: existing.id || Date.now(),
     nombre: document.getElementById('p-nombre').value.trim(),
     categoria,
     precio: parseFloat(document.getElementById('p-precio').value),
@@ -203,7 +205,8 @@ function addProduct(e) {
     descripcion: document.getElementById('p-descripcion').value.trim(),
     stock: document.getElementById('p-stock').value.trim() || 'Disponible',
     imagen: imagenes[0],
-    imagenes
+    imagenes,
+    visible: existing.visible  // preserve hidden/visible state when editing
   };
 
   if (editingIndex >= 0) {
@@ -327,17 +330,37 @@ function compressImage(file, maxPx, quality) {
   });
 }
 
+function setSubmitBusy(busy) {
+  const btn = document.querySelector('#product-form button[type="submit"]');
+  if (!btn) return;
+  btn.disabled = busy;
+  if (busy) {
+    btn.textContent = '⏳ Procesando fotos…';
+  } else {
+    btn.textContent = editingIndex >= 0 ? '💾 Guardar cambios' : 'Añadir producto';
+  }
+}
+
 function openFotosPicker() {
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = 'image/*';
   input.multiple = true;
-  input.onchange = () => {
-    Array.from(input.files).forEach(async file => {
+  input.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+  document.body.appendChild(input);
+  input.onchange = async () => {
+    const files = Array.from(input.files);
+    document.body.removeChild(input);
+    if (!files.length) return;
+    compressingCount += files.length;
+    setSubmitBusy(true);
+    for (const file of files) {
       const compressed = await compressImage(file, 900, 0.75);
       pendingImages.push(compressed);
+      compressingCount--;
       renderFotosPreview();
-    });
+    }
+    if (compressingCount === 0) setSubmitBusy(false);
   };
   input.click();
 }
