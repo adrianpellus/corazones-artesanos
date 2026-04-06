@@ -187,7 +187,13 @@ function escapeAttr(str) {
 
 function addProduct(e) {
   e.preventDefault();
+  const nombre = document.getElementById('p-nombre').value.trim();
   const categoria = document.getElementById('p-categoria').value;
+  const precio = document.getElementById('p-precio').value;
+  if (!nombre || !categoria || !precio) {
+    showToast('⚠️ Rellena nombre, categoría y precio');
+    return;
+  }
   const existingImgs = editingIndex >= 0
     ? (adminProducts[editingIndex].imagenes || [adminProducts[editingIndex].imagen])
     : [];
@@ -311,8 +317,10 @@ function exportJSON() {
 function compressImage(file, maxPx, quality) {
   return new Promise(resolve => {
     const reader = new FileReader();
+    reader.onerror = () => resolve(null);
     reader.onload = e => {
       const img = new Image();
+      img.onerror = () => resolve(null);
       img.onload = () => {
         let w = img.width, h = img.height;
         if (w > maxPx || h > maxPx) {
@@ -354,13 +362,17 @@ function openFotosPicker() {
     if (!files.length) return;
     compressingCount += files.length;
     setSubmitBusy(true);
-    for (const file of files) {
-      const compressed = await compressImage(file, 900, 0.75);
-      pendingImages.push(compressed);
-      compressingCount--;
-      renderFotosPreview();
+    try {
+      for (const file of files) {
+        const compressed = await compressImage(file, 900, 0.75);
+        if (compressed) pendingImages.push(compressed);
+        compressingCount--;
+        renderFotosPreview();
+      }
+    } catch (err) {
+      compressingCount = 0;
     }
-    if (compressingCount === 0) setSubmitBusy(false);
+    setSubmitBusy(false);
   };
   input.click();
 }
