@@ -28,3 +28,29 @@ async function sbSet(key, value) {
   );
   return res.ok;
 }
+
+// Upload image to Supabase Storage and return its public URL
+// Requires a public bucket named "productos" in your Supabase project
+async function sbUploadImage(dataUrl, filename) {
+  try {
+    const fetchRes = await fetch(dataUrl);
+    const blob = await fetchRes.blob();
+    const uploadRes = await fetch(
+      `${SUPABASE_URL}/storage/v1/object/productos/${filename}`,
+      {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Content-Type': blob.type || 'image/jpeg',
+          'x-upsert': 'true'
+        },
+        body: blob
+      }
+    );
+    if (!uploadRes.ok) return null;
+    return `${SUPABASE_URL}/storage/v1/object/public/productos/${filename}`;
+  } catch (e) {
+    return null;
+  }
+}

@@ -365,7 +365,12 @@ function openFotosPicker() {
     try {
       for (const file of files) {
         const compressed = await compressImage(file, 900, 0.75);
-        if (compressed) pendingImages.push(compressed);
+        if (compressed) {
+          // Try to upload to Supabase Storage; fall back to base64 if it fails
+          const filename = `${Date.now()}_${Math.random().toString(36).slice(2)}.jpg`;
+          const url = await sbUploadImage(compressed, filename);
+          pendingImages.push(url || compressed);
+        }
         compressingCount--;
         renderFotosPreview();
       }
