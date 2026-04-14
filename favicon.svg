@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FDF6F0"/>
+      <stop offset="100%" stop-color="#F5E6D8"/>
+    </linearGradient>
+    <linearGradient id="heartGrad" x1="160" y1="100" x2="380" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#D4702E"/>
+      <stop offset="100%" stop-color="#8B3040"/>
+    </linearGradient>
+    <linearGradient id="flameGrad" x1="256" y1="60" x2="256" y2="130" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFD54F"/>
+      <stop offset="60%" stop-color="#FF8C00"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+    <clipPath id="circle">
+      <circle cx="256" cy="256" r="256"/>
+    </clipPath>
+  </defs>
+
+  <!-- Circular background -->
+  <circle cx="256" cy="256" r="256" fill="url(#bgGrad)"/>
+
+  <!-- Subtle border ring -->
+  <circle cx="256" cy="256" r="248" fill="none" stroke="#C4602A" stroke-width="6" opacity="0.2"/>
+
+  <!-- Heart shape centered -->
+  <path d="M256 400
+    C256 400 110 300 110 190
+    C110 140 148 100 196 100
+    C220 100 240 114 256 136
+    C272 114 292 100 316 100
+    C364 100 402 140 402 190
+    C402 300 256 400 256 400Z"
+    fill="url(#heartGrad)"/>
+
+  <!-- Candle flame on top of heart -->
+  <ellipse cx="256" cy="88" rx="18" ry="30" fill="url(#flameGrad)" opacity="0.95"/>
+  <ellipse cx="256" cy="96" rx="9" ry="18" fill="#FFF9C4" opacity="0.6"/>
+
+  <!-- Crochet loop inside heart -->
+  <path d="M200 280 Q228 240 256 268 Q284 296 312 254"
+    stroke="white" stroke-width="8" fill="none"
+    stroke-linecap="round" opacity="0.4"/>
+  <circle cx="312" cy="250" r="13" stroke="white" stroke-width="7"
+    fill="none" opacity="0.35"/>
+</svg>
