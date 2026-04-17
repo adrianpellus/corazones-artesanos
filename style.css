@@ -413,13 +413,13 @@ button {
 /* Hero image */
 .hero-image {
   width: 100%;
-  max-width: 680px;
+  max-width: 884px;
 }
 
 .hero-img-frame {
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
   overflow: hidden;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 15;
   box-shadow: 0 16px 48px var(--shadow-deep);
   border: 4px solid var(--sand-light);
 }
