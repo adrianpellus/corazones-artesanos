@@ -417,7 +417,7 @@ button {
 }
 
 .hero-img-frame {
-  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  border-radius: 16px;
   overflow: hidden;
   aspect-ratio: 16 / 15;
   box-shadow: 0 16px 48px var(--shadow-deep);
