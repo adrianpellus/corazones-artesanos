@@ -14,20 +14,19 @@
 }
 
 :root {
-  --blue: #3B6FB5;
-  --blue-dark: #2A5298;
-  --blue-mid: #4A7EC5;
-  --cream: #F0F4FB;
-  --cream-dark: #E0E8F4;
-  --navy: #1A3558;
-  --navy-mid: #2A4A78;
+  --cream: #FDF7EF;
+  --cream-dark: #F0E6D3;
+  --terracota: #B85C38;
+  --terracota-dark: #8C3E22;
+  --brown: #3D1F0F;
+  --brown-mid: #6B3A2A;
   --sage: #7A8C6A;
-  --sand: #C8D4E8;
-  --sand-light: #E4EBF5;
-  --text: #1A3558;
-  --text-muted: #5A6E8A;
-  --shadow: rgba(59,111,181,0.10);
-  --shadow-deep: rgba(59,111,181,0.22);
+  --sand: #DEC9A8;
+  --sand-light: #F5ECD8;
+  --text: #2C1810;
+  --text-muted: #7A5C50;
+  --shadow: rgba(61,31,15,0.10);
+  --shadow-deep: rgba(61,31,15,0.22);
   --radius: 16px;
   --transition: 0.25s ease;
 }
@@ -47,7 +46,7 @@ body {
 
 h1, h2, h3, h4 {
   font-family: 'Playfair Display', Georgia, serif;
-  color: var(--navy);
+  color: var(--brown);
   line-height: 1.2;
 }
 
@@ -123,14 +122,14 @@ button {
   font-weight: 600;
   font-size: 0.875rem;
   letter-spacing: 0.03em;
-  color: var(--navy-mid);
+  color: var(--brown-mid);
   padding: 6px 12px;
   border-radius: 8px;
   transition: color var(--transition), background var(--transition);
 }
 
 .nav-link:hover {
-  color: var(--blue);
+  color: var(--terracota);
   background: var(--sand-light);
 }
 
@@ -141,7 +140,7 @@ button {
   font-size: 0.875rem;
   letter-spacing: 0.04em;
   color: #fff;
-  background: var(--blue);
+  background: var(--terracota);
   padding: 10px 20px;
   border-radius: 50px;
   transition: background var(--transition), transform var(--transition);
@@ -150,7 +149,7 @@ button {
 }
 
 .header-cta:hover {
-  background: var(--blue-dark);
+  background: var(--terracota-dark);
   transform: translateY(-1px);
 }
 
@@ -176,7 +175,7 @@ button {
   display: block;
   width: 22px;
   height: 2px;
-  background: var(--navy);
+  background: var(--brown);
   border-radius: 2px;
   transition: transform var(--transition), opacity var(--transition);
   transform-origin: center;
@@ -227,14 +226,14 @@ button {
   font-family: 'Lato', sans-serif;
   font-weight: 600;
   font-size: 1.1rem;
-  color: var(--navy-mid);
+  color: var(--brown-mid);
   padding: 14px 16px;
   border-radius: 12px;
   transition: color var(--transition), background var(--transition);
 }
 
 .mobile-menu-link:hover {
-  color: var(--blue);
+  color: var(--terracota);
   background: var(--sand-light);
 }
 
@@ -242,13 +241,13 @@ button {
   margin-top: 8px;
   text-align: center;
   color: #fff;
-  background: var(--blue);
+  background: var(--terracota);
   border-radius: 50px;
   padding: 14px 16px;
 }
 
 .mobile-menu-cta:hover {
-  background: var(--blue-dark);
+  background: var(--terracota-dark);
   color: #fff;
 }
 
@@ -324,13 +323,13 @@ button {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--blue);
+  color: var(--terracota);
 }
 
 .hero-title {
   font-size: clamp(2.4rem, 6vw, 3.8rem);
   font-weight: 700;
-  color: var(--navy);
+  color: var(--brown);
   line-height: 1.1;
 }
 
@@ -357,17 +356,17 @@ button {
   font-weight: 700;
   font-size: 1rem;
   color: #fff;
-  background: var(--blue);
+  background: var(--terracota);
   padding: 14px 28px;
   border-radius: 50px;
   transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
-  box-shadow: 0 4px 16px rgba(59,111,181,0.35);
+  box-shadow: 0 4px 16px rgba(184,92,56,0.35);
 }
 
 .btn-primary:hover {
-  background: var(--blue-dark);
+  background: var(--terracota-dark);
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(59,111,181,0.45);
+  box-shadow: 0 6px 24px rgba(184,92,56,0.45);
 }
 
 .btn-secondary {
@@ -377,7 +376,7 @@ button {
   font-family: 'Lato', sans-serif;
   font-weight: 700;
   font-size: 1rem;
-  color: var(--navy-mid);
+  color: var(--brown-mid);
   background: transparent;
   border: 2px solid var(--sand);
   padding: 13px 26px;
@@ -386,9 +385,9 @@ button {
 }
 
 .btn-secondary:hover {
-  border-color: var(--blue);
-  color: var(--blue);
-  background: rgba(59,111,181,0.06);
+  border-color: var(--terracota);
+  color: var(--terracota);
+  background: rgba(184,92,56,0.06);
   transform: translateY(-2px);
 }
 
@@ -404,7 +403,7 @@ button {
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: var(--navy-mid);
+  color: var(--brown-mid);
   background: var(--cream-dark);
   border: 1px solid var(--sand);
   padding: 5px 14px;
@@ -468,7 +467,7 @@ button {
   font-family: 'Lato', sans-serif;
   font-weight: 700;
   font-size: 0.875rem;
-  color: var(--navy);
+  color: var(--brown);
 }
 
 .sello-text span {
@@ -490,7 +489,7 @@ button {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   text-align: center;
   margin-bottom: 12px;
-  color: var(--navy);
+  color: var(--brown);
 }
 
 .section-title.left {
@@ -540,7 +539,7 @@ button {
 }
 
 .tienda-search:focus {
-  border-color: var(--blue);
+  border-color: var(--terracota);
   box-shadow: 0 0 0 3px rgba(196, 96, 42, 0.1);
 }
 
@@ -561,7 +560,7 @@ button {
   font-weight: 700;
   font-size: 0.875rem;
   letter-spacing: 0.03em;
-  color: var(--navy-mid);
+  color: var(--brown-mid);
   background: var(--cream-dark);
   border: 1.5px solid var(--sand);
   padding: 8px 20px;
@@ -571,13 +570,13 @@ button {
 }
 
 .filter-btn:hover {
-  border-color: var(--blue);
-  color: var(--blue);
+  border-color: var(--terracota);
+  color: var(--terracota);
 }
 
 .filter-btn.active {
-  background: var(--blue);
-  border-color: var(--blue);
+  background: var(--terracota);
+  border-color: var(--terracota);
   color: #fff;
 }
 
@@ -636,7 +635,7 @@ button {
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
-  color: var(--navy);
+  color: var(--brown);
   cursor: pointer;
   transition: background var(--transition);
   z-index: 2;
@@ -682,8 +681,8 @@ button {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--blue);
-  background: rgba(59,111,181,0.1);
+  color: var(--terracota);
+  background: rgba(184,92,56,0.1);
   padding: 3px 10px;
   border-radius: 50px;
   display: inline-block;
@@ -693,7 +692,7 @@ button {
 .product-name {
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--navy);
+  color: var(--brown);
   font-family: 'Playfair Display', serif;
 }
 
@@ -718,7 +717,7 @@ button {
   font-family: 'Playfair Display', serif;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--blue);
+  color: var(--terracota);
 }
 
 .stock-badge {
@@ -737,15 +736,15 @@ button {
 }
 
 .stock-low {
-  background: rgba(59,111,181,0.12);
-  color: var(--blue-dark);
-  border: 1px solid rgba(59,111,181,0.25);
+  background: rgba(184,92,56,0.12);
+  color: var(--terracota-dark);
+  border: 1px solid rgba(184,92,56,0.25);
 }
 
 .stock-order {
-  background: rgba(26,53,88,0.08);
-  color: var(--navy-mid);
-  border: 1px solid rgba(26,53,88,0.15);
+  background: rgba(61,31,15,0.08);
+  color: var(--brown-mid);
+  border: 1px solid rgba(61,31,15,0.15);
 }
 
 .btn-wa-product {
@@ -792,13 +791,13 @@ button {
 
 .encargos-icono {
   font-size: 2rem;
-  color: var(--blue);
+  color: var(--terracota);
   margin-bottom: 12px;
 }
 
 .encargos-titulo {
   font-size: clamp(1.75rem, 4vw, 2.4rem);
-  color: var(--navy);
+  color: var(--brown);
   margin-bottom: 12px;
 }
 
@@ -835,7 +834,7 @@ button {
 .encargo-item strong {
   font-family: 'Playfair Display', serif;
   font-size: 1.05rem;
-  color: var(--navy);
+  color: var(--brown);
   display: block;
   margin-bottom: 4px;
 }
@@ -910,7 +909,7 @@ button {
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(to top, rgba(26,53,88,0.75), transparent);
+  background: linear-gradient(to top, rgba(61,31,15,0.75), transparent);
   color: #fff;
   font-family: 'Lato', sans-serif;
   font-size: 0.8rem;
@@ -950,7 +949,7 @@ button {
   font-family: 'Playfair Display', serif;
   font-size: 5rem;
   line-height: 1;
-  color: var(--blue);
+  color: var(--terracota);
   opacity: 0.18;
   position: absolute;
   top: 8px;
@@ -1037,14 +1036,14 @@ button {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--blue);
+  color: var(--terracota);
 }
 
 .sobre-subtitulo {
   font-family: 'Playfair Display', serif;
   font-style: italic;
   font-size: 1.1rem;
-  color: var(--blue);
+  color: var(--terracota);
   line-height: 1.65;
   margin-bottom: 16px;
 }
@@ -1060,8 +1059,8 @@ button {
   font-family: 'Playfair Display', serif;
   font-style: italic;
   font-size: 1.2rem;
-  color: var(--navy-mid);
-  border-left: 3px solid var(--blue);
+  color: var(--brown-mid);
+  border-left: 3px solid var(--terracota);
   padding-left: 16px;
   line-height: 1.6;
   margin: 4px 0;
@@ -1083,7 +1082,7 @@ button {
   font-weight: 700;
   font-size: 0.875rem;
   letter-spacing: 0.04em;
-  color: var(--blue);
+  color: var(--terracota);
   display: block;
   margin-bottom: 8px;
 }
@@ -1119,7 +1118,7 @@ button {
 /* ─── 13. CONTACTO ───────────────────────────────────────────────────────────── */
 
 .contacto-section {
-  background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);
+  background: linear-gradient(135deg, var(--terracota-dark) 0%, var(--terracota) 100%);
   padding: 72px 0;
 }
 
@@ -1168,7 +1167,7 @@ button {
 
 .contacto-btn-wa {
   background: #fff;
-  color: var(--navy);
+  color: var(--brown);
   box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
 
@@ -1191,7 +1190,7 @@ button {
 /* ─── 14. FOOTER ─────────────────────────────────────────────────────────────── */
 
 .site-footer {
-  background: var(--navy);
+  background: var(--brown);
   padding: 48px 0 0;
 }
 

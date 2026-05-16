@@ -478,7 +478,7 @@ function deleteCategoria(index) {
 
 // ─── BANNER ──────────────────────────────────────────────────────────────────
 const BANNER_COLORS = {
-  azul-cielo: { bg: '#4A7EC5', text: '#fff' },
+  terracota: { bg: '#C4602A', text: '#fff' },
   'verde-musgo': { bg: '#5C6B3A', text: '#fff' },
   'azul-oscuro': { bg: '#2C3E6B', text: '#fff' },
   granate: { bg: '#7B2D3A', text: '#fff' }
@@ -501,7 +501,7 @@ async function loadBannerAdmin() {
 
 async function saveBanner() {
   const colorRadio = document.querySelector('input[name="banner-color"]:checked');
-  const color = colorRadio ? colorRadio.value : 'azul-cielo';
+  const color = colorRadio ? colorRadio.value : 'terracota';
   const msgInput = document.getElementById('banner-msg').value.trim();
   const config = {
     activo: document.getElementById('banner-activo').checked,

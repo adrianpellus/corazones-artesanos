@@ -4,16 +4,14 @@ const WA_NUMBER = '34655197603';
 const DEFAULT_BANNER = {
   activo: true,
   texto: '🕯️ Nuevas velas de temporada disponibles — ¡Escríbeme!',
-  color: 'azul-cielo'
+  color: 'terracota'
 };
 
 const BANNER_COLORS = {
-  'azul-cielo': { bg: '#4A7EC5', text: '#fff' },
-  'azul-oscuro': { bg: '#2A5298', text: '#fff' },
-  'azul-profundo': { bg: '#1A3558', text: '#fff' },
-  'verde-mar': { bg: '#3B6FB5', text: '#fff' },
-  granate: { bg: '#7B2D3A', text: '#fff' },
-  terracota: { bg: '#C4602A', text: '#fff' }
+  terracota: { bg: '#C4602A', text: '#fff' },
+  'verde-musgo': { bg: '#5C6B3A', text: '#fff' },
+  'azul-oscuro': { bg: '#2C3E6B', text: '#fff' },
+  granate: { bg: '#7B2D3A', text: '#fff' }
 };
 
 async function initBanner() {
